@@ -59,7 +59,6 @@ in
     pkgs.bfg-repo-cleaner
     pkgs.minicom
     pkgs.cachix
-    pkgs.gh
     pkgs.just
   ];
 
@@ -100,6 +99,15 @@ in
     package = gopkgs.go;
   };
 
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      aliases = {
+        co = "pr checkout";
+      };
+    };
+  };
 
 
   programs.gitui = {
