@@ -244,7 +244,7 @@ in
         modified_carbonfox = {
           fg = "#f2f4f8";
           red = "#ee5396";
-          green = "#25be6a";
+          green = "#de3163";
           blue = "#78a9ff";
           yellow = "#08bdba";
           magenta = "#be95ff";
