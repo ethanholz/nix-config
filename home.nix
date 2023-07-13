@@ -61,6 +61,9 @@ in
     pkgs.cachix
     pkgs.just
     pkgs.git-cliff
+    pkgs.google-cloud-sdk
+    # node
+    pkgs.nodePackages.typescript
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
