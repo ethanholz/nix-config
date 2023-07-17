@@ -80,6 +80,11 @@ in
     #   org.gradle.daemon.idletimeout=3600000
     # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
+    ".config/zellij/layouts/ssh-layout.kdl".source = pkgs.writeText "ssh-layout.kdl"
+      ''
+        layout {
+        }
+      '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -207,6 +212,7 @@ in
       difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
       diff.tool = "nvimdiff";
       init.defaultBranch = "main";
+      rebase.autoStash = true;
     };
   };
 
