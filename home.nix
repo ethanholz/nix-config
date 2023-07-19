@@ -43,6 +43,7 @@ in
     pkgs.nil
     pkgs.nixpkgs-fmt
     pkgs.gopls
+    pkgs.govulncheck
     pkgs.revive
     pkgs.fzf
     pkgs.android-tools
@@ -239,6 +240,9 @@ in
         disabled = true;
       };
       gcloud = {
+        disabled = true;
+      };
+      battery = {
         disabled = true;
       };
     };

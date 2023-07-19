@@ -13,7 +13,7 @@
 
   outputs = { nixpkgs, home-manager, git-ce, ... }:
     let
-      version = "1.20.5";
+      version = "1.20.6";
       goverlay = final: prev: {
         go = prev.go.overrideAttrs
           (old: {
@@ -21,7 +21,7 @@
             src = final.fetchurl
               {
                 url = "https://go.dev/dl/go${version}.src.tar.gz";
-                sha256 = "123ap6l3qambqra986yzd1zjdz3w5sv1aj1gcmwzxyicp8rw25cs";
+                sha256 = "0w3z1cp0jrr8kqkr7ksfddi56r3dz26wpq05yzlbmf2mzg35pvk2";
               };
           });
       };
