@@ -61,10 +61,12 @@ in
     pkgs.minicom
     pkgs.cachix
     pkgs.just
+    pkgs.hurl
     pkgs.git-cliff
     pkgs.google-cloud-sdk
     # node
     pkgs.nodePackages.typescript
+    pkgs.rust-analyzer
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
