@@ -1,5 +1,10 @@
-{ config, pkgs, gopkgs, gitce, ... }:
-let
+{
+  config,
+  pkgs,
+  gopkgs,
+  gitce,
+  ...
+}: let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
@@ -7,8 +12,7 @@ let
     url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
     sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
   };
-in
-{
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = user;
@@ -71,6 +75,7 @@ in
     # node
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
+    pkgs.nodejs_20
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -88,7 +93,8 @@ in
     # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
-    ".config/zellij/layouts/ssh-layout.kdl".source = pkgs.writeText "ssh-layout.kdl"
+    ".config/zellij/layouts/ssh-layout.kdl".source =
+      pkgs.writeText "ssh-layout.kdl"
       ''
         layout {
         }
@@ -126,74 +132,69 @@ in
     };
   };
 
-
   programs.gitui = {
     enable = true;
-    keyConfig =
-      ''
-        (
-            open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
+    keyConfig = ''
+      (
+          open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
 
-            move_left: Some(( code: Char('h'), modifiers: ( bits: 0,),)),
-            move_right: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
-            move_up: Some(( code: Char('k'), modifiers: ( bits: 0,),)),
-            move_down: Some(( code: Char('j'), modifiers: ( bits: 0,),)),
-    
-            popup_up: Some(( code: Char('p'), modifiers: ( bits: 2,),)),
-            popup_down: Some(( code: Char('n'), modifiers: ( bits: 2,),)),
-            page_up: Some(( code: Char('b'), modifiers: ( bits: 2,),)),
-            page_down: Some(( code: Char('f'), modifiers: ( bits: 2,),)),
-            home: Some(( code: Char('g'), modifiers: ( bits: 0,),)),
-            end: Some(( code: Char('G'), modifiers: ( bits: 1,),)),
-            shift_up: Some(( code: Char('K'), modifiers: ( bits: 1,),)),
-            shift_down: Some(( code: Char('J'), modifiers: ( bits: 1,),)),
+          move_left: Some(( code: Char('h'), modifiers: ( bits: 0,),)),
+          move_right: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+          move_up: Some(( code: Char('k'), modifiers: ( bits: 0,),)),
+          move_down: Some(( code: Char('j'), modifiers: ( bits: 0,),)),
 
-            edit_file: Some(( code: Char('I'), modifiers: ( bits: 1,),)),
+          popup_up: Some(( code: Char('p'), modifiers: ( bits: 2,),)),
+          popup_down: Some(( code: Char('n'), modifiers: ( bits: 2,),)),
+          page_up: Some(( code: Char('b'), modifiers: ( bits: 2,),)),
+          page_down: Some(( code: Char('f'), modifiers: ( bits: 2,),)),
+          home: Some(( code: Char('g'), modifiers: ( bits: 0,),)),
+          end: Some(( code: Char('G'), modifiers: ( bits: 1,),)),
+          shift_up: Some(( code: Char('K'), modifiers: ( bits: 1,),)),
+          shift_down: Some(( code: Char('J'), modifiers: ( bits: 1,),)),
 
-            status_reset_item: Some(( code: Char('U'), modifiers: ( bits: 1,),)),
+          edit_file: Some(( code: Char('I'), modifiers: ( bits: 1,),)),
 
-            diff_reset_lines: Some(( code: Char('u'), modifiers: ( bits: 0,),)),
-            diff_stage_lines: Some(( code: Char('s'), modifiers: ( bits: 0,),)),
+          status_reset_item: Some(( code: Char('U'), modifiers: ( bits: 1,),)),
 
-            stashing_save: Some(( code: Char('w'), modifiers: ( bits: 0,),)),
-            stashing_toggle_index: Some(( code: Char('m'), modifiers: ( bits: 0,),)),
+          diff_reset_lines: Some(( code: Char('u'), modifiers: ( bits: 0,),)),
+          diff_stage_lines: Some(( code: Char('s'), modifiers: ( bits: 0,),)),
 
-            stash_open: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+          stashing_save: Some(( code: Char('w'), modifiers: ( bits: 0,),)),
+          stashing_toggle_index: Some(( code: Char('m'), modifiers: ( bits: 0,),)),
 
-            abort_merge: Some(( code: Char('M'), modifiers: ( bits: 1,),)),
+          stash_open: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
 
-            quit : Some(( code: Char('q'), modifiers: ( bits: 0,),)),
-        )
-      '';
-    theme =
-      ''
-        (
-            selected_tab: Reset,
-            command_fg: White,
-            selection_bg: Blue,
-            selection_fg: White,
-            cmdbar_bg: Blue,
-            cmdbar_extra_lines_bg: Blue,
-            disabled_fg: DarkGray,
-            diff_line_add: Green,
-            diff_line_delete: Red,
-            diff_file_added: LightGreen,
-            diff_file_removed: LightRed,
-            diff_file_moved: LightMagenta,
-            diff_file_modified: Yellow,
-            commit_hash: Magenta,
-            commit_time: LightCyan,
-            commit_author: Green,
-            danger_fg: Red,
-            push_gauge_bg: Blue,
-            push_gauge_fg: Reset,
-            tag_fg: LightMagenta,
-            branch_fg: LightYellow,
-        )
-      '';
+          abort_merge: Some(( code: Char('M'), modifiers: ( bits: 1,),)),
 
+          quit : Some(( code: Char('q'), modifiers: ( bits: 0,),)),
+      )
+    '';
+    theme = ''
+      (
+          selected_tab: Reset,
+          command_fg: White,
+          selection_bg: Blue,
+          selection_fg: White,
+          cmdbar_bg: Blue,
+          cmdbar_extra_lines_bg: Blue,
+          disabled_fg: DarkGray,
+          diff_line_add: Green,
+          diff_line_delete: Red,
+          diff_file_added: LightGreen,
+          diff_file_removed: LightRed,
+          diff_file_moved: LightMagenta,
+          diff_file_modified: Yellow,
+          commit_hash: Magenta,
+          commit_time: LightCyan,
+          commit_author: Green,
+          danger_fg: Red,
+          push_gauge_bg: Blue,
+          push_gauge_fg: Reset,
+          tag_fg: LightMagenta,
+          branch_fg: LightYellow,
+      )
+    '';
   };
-
 
   programs.git = {
     enable = true;
@@ -223,7 +224,6 @@ in
       rebase.autoStash = true;
     };
   };
-
 
   programs.starship = {
     enable = true;
@@ -282,15 +282,12 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
-        import = ["~/.config/alacritty/carbonfox.yml"];
-        font = {
-            normal.family = "JetBrains Mono Nerd Font";
-            size = 14.0;
-        };
-        shell.program = "/bin/zsh";
+      import = ["~/.config/alacritty/carbonfox.yml"];
+      font = {
+        normal.family = "JetBrains Mono Nerd Font";
+        size = 14.0;
+      };
+      shell.program = "/bin/zsh";
     };
   };
-
 }
-
-
