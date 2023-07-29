@@ -49,7 +49,6 @@ in {
     # '')
     pkgs.fd
     pkgs.nil
-    pkgs.nixpkgs-fmt
     pkgs.gopls
     pkgs.govulncheck
     pkgs.revive
@@ -76,6 +75,7 @@ in {
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
     pkgs.nodejs_20
+    pkgs.alejandra
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
