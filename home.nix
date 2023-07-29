@@ -3,6 +3,10 @@ let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
+  alacrittyTheme = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
+    sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
+  };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -83,6 +87,7 @@ in
     #   org.gradle.daemon.idletimeout=3600000
     # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
+    ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
     ".config/zellij/layouts/ssh-layout.kdl".source = pkgs.writeText "ssh-layout.kdl"
       ''
         layout {
@@ -271,6 +276,18 @@ in
           bg = "#b6b8bb";
         };
       };
+    };
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+        import = ["~/.config/alacritty/carbonfox.yml"];
+        font = {
+            normal.family = "JetBrains Mono Nerd Font";
+            size = 14.0;
+        };
+        shell.program = "/bin/zsh";
     };
   };
 
