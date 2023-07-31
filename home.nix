@@ -1,10 +1,10 @@
-{
-  config,
-  pkgs,
-  gopkgs,
-  gitce,
-  ...
-}: let
+{ config
+, pkgs
+, gopkgs
+, gitce
+, ...
+}:
+let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
@@ -12,7 +12,8 @@
     url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
     sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
   };
-in {
+in
+{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = user;
@@ -62,7 +63,6 @@ in {
     pkgs.gitleaks
     pkgs.natscli
     pkgs.nixd
-    pkgs.todoist
     pkgs.git-lfs
     pkgs.bfg-repo-cleaner
     pkgs.minicom
@@ -76,6 +76,9 @@ in {
     pkgs.rust-analyzer
     pkgs.nodejs_20
     pkgs.alejandra
+    pkgs.yq-go
+    pkgs.elixir
+    pkgs.ranger
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -95,10 +98,10 @@ in {
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
     ".config/zellij/layouts/ssh-layout.kdl".source =
       pkgs.writeText "ssh-layout.kdl"
-      ''
-        layout {
-        }
-      '';
+        ''
+          layout {
+          }
+        '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -282,7 +285,7 @@ in {
   programs.alacritty = {
     enable = true;
     settings = {
-      import = ["~/.config/alacritty/carbonfox.yml"];
+      import = [ "~/.config/alacritty/carbonfox.yml" ];
       font = {
         normal.family = "JetBrains Mono Nerd Font";
         size = 14.0;
