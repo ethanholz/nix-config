@@ -96,6 +96,7 @@ in
     # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
+    ".config/zellij/config.kdl".source = ./zellij/config.kdl;
     ".config/zellij/layouts/ssh-layout.kdl".source =
       pkgs.writeText "ssh-layout.kdl"
         ''
@@ -260,26 +261,6 @@ in
 
   programs.zellij = {
     enable = true;
-    settings = {
-      default_shell = "zsh";
-      theme = "modified_carbonfox";
-      copy_command = "wl-copy";
-      themes = {
-        modified_carbonfox = {
-          fg = "#f2f4f8";
-          red = "#ee5396";
-          green = "#de3163";
-          blue = "#78a9ff";
-          yellow = "#08bdba";
-          magenta = "#be95ff";
-          orange = "#3ddbd9";
-          cyan = "#33b1ff";
-          black = "#161616";
-          white = "#b6b8bb";
-          bg = "#b6b8bb";
-        };
-      };
-    };
   };
 
   programs.alacritty = {
