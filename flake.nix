@@ -17,7 +17,7 @@
     git-ce,
     ...
   }: let
-    version = "1.20.6";
+    version = "1.20.7";
     goverlay = final: prev: {
       go =
         prev.go.overrideAttrs
@@ -27,7 +27,7 @@
             final.fetchurl
             {
               url = "https://go.dev/dl/go${version}.src.tar.gz";
-              sha256 = "0w3z1cp0jrr8kqkr7ksfddi56r3dz26wpq05yzlbmf2mzg35pvk2";
+              sha256 = "15zm41sv4hp5yks3igvjh4fya1i3yv9zxgf2pc6knwqyxk4yjpic";
             };
         });
     };
