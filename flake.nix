@@ -17,20 +17,20 @@
     git-ce,
     ...
   }: let
-    version = "1.20.7";
-    goverlay = final: prev: {
-      go =
-        prev.go.overrideAttrs
-        (old: {
-          inherit version;
-          src =
-            final.fetchurl
-            {
-              url = "https://go.dev/dl/go${version}.src.tar.gz";
-              sha256 = "15zm41sv4hp5yks3igvjh4fya1i3yv9zxgf2pc6knwqyxk4yjpic";
-            };
-        });
-    };
+    # version = "1.20.7";
+    # goverlay = final: prev: {
+    #   go =
+    #     prev.go.overrideAttrs
+    #     (old: {
+    #       inherit version;
+    #       src =
+    #         final.fetchurl
+    #         {
+    #           url = "https://go.dev/dl/go${version}.src.tar.gz";
+    #           sha256 = "15zm41sv4hp5yks3igvjh4fya1i3yv9zxgf2pc6knwqyxk4yjpic";
+    #         };
+    #     });
+    # };
     system = "x86_64-linux";
     gitce = git-ce.packages.${system}.default;
     pkgs = import nixpkgs {
@@ -38,7 +38,7 @@
     };
     gopkgs = import nixpkgs {
       inherit system;
-      overlays = [goverlay];
+      # overlays = [goverlay];
     };
   in {
     homeConfigurations."ethan" = home-manager.lib.homeManagerConfiguration {

@@ -79,6 +79,7 @@ in
     pkgs.yq-go
     pkgs.elixir
     pkgs.ranger
+    pkgs.wally-cli
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -121,10 +122,10 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.go = {
-    enable = true;
-    package = gopkgs.go;
-  };
+  # programs.go = {
+  #   enable = true;
+  #   package = gopkgs.go;
+  # };
 
   programs.gh = {
     enable = true;
@@ -203,7 +204,7 @@ in
   programs.git = {
     enable = true;
     userName = "Ethan Holz";
-    userEmail = "iplaybassx2@gmail.com";
+    userEmail = "ethan.holz@thoriumworks.com";
     signing = {
       key = "F5250C156C4CFD77";
       signByDefault = true;
