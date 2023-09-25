@@ -9,12 +9,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     git-ce.url = "github:ethanholz/git-ce";
+    zig.url = "github:mitchellh/zig-overlay";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
     git-ce,
+    zig,
     ...
   }: let
     # version = "1.20.7";
@@ -35,6 +37,7 @@
     gitce = git-ce.packages.${system}.default;
     pkgs = import nixpkgs {
       inherit system;
+      overlays = [ zig.overlays.default ];
     };
     gopkgs = import nixpkgs {
       inherit system;
@@ -46,7 +49,7 @@
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
-      modules = [./home.nix];
+      modules = [./home.nix ./lsp.nix ];
       extraSpecialArgs = {inherit gopkgs gitce;};
 
       # Optionally use extraSpecialArgs

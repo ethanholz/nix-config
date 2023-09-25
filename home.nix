@@ -49,8 +49,6 @@ in
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.fd
-    pkgs.nil
-    pkgs.gopls
     pkgs.govulncheck
     pkgs.revive
     pkgs.fzf
@@ -80,6 +78,19 @@ in
     pkgs.elixir
     pkgs.ranger
     pkgs.wally-cli
+    pkgs.goreleaser
+    pkgs.nfpm
+    pkgs.wasmtime
+    pkgs.wabt
+    pkgs.tinygo
+    pkgs.wazero
+    pkgs.rust-analyzer
+    pkgs.gh
+    pkgs.yubikey-manager
+    pkgs.helix
+    pkgs.zigpkgs.default
+    pkgs.tailwindcss
+    pkgs.terraform
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -122,19 +133,9 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # programs.go = {
-  #   enable = true;
-  #   package = gopkgs.go;
-  # };
-
-  programs.gh = {
+  programs.go = {
     enable = true;
-    settings = {
-      git_protocol = "ssh";
-      aliases = {
-        co = "pr checkout";
-      };
-    };
+    package = pkgs.go_1_21;
   };
 
   programs.gitui = {
@@ -206,7 +207,7 @@ in
     userName = "Ethan Holz";
     userEmail = "ethan.holz@thoriumworks.com";
     signing = {
-      key = "F5250C156C4CFD77";
+      key = "B4E94FDF35334301";
       signByDefault = true;
     };
     ignores = [
@@ -264,15 +265,16 @@ in
     enable = true;
   };
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      import = [ "~/.config/alacritty/carbonfox.yml" ];
-      font = {
-        normal.family = "JetBrains Mono Nerd Font";
-        size = 14.0;
-      };
-      shell.program = "/bin/zsh";
-    };
-  };
+
+  # programs.alacritty = {
+  #   enable = true;
+  #   settings = {
+  #     import = [ "~/.config/alacritty/carbonfox.yml" ];
+  #     font = {
+  #       normal.family = "JetBrains Mono Nerd Font";
+  #       size = 14.0;
+  #     };
+  #     shell.program = "/bin/zsh";
+  #   };
+  # };
 }
