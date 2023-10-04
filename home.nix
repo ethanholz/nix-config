@@ -91,6 +91,10 @@ in
     pkgs.zigpkgs.default
     pkgs.tailwindcss
     pkgs.terraform
+    pkgs.valgrind
+    pkgs.openmm
+    pkgs.python311
+    pkgs.ttyd
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
