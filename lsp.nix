@@ -1,7 +1,7 @@
 { config
 , pkgs
-, gopkgs
 , gitce
+, zls
 , ...
 }:
 {
@@ -11,6 +11,6 @@
         pkgs.gopls
         pkgs.ansible-language-server
         pkgs.ansible-lint
-        pkgs.zls
+        zls
     ];
 }

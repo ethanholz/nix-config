@@ -10,6 +10,8 @@
     };
     git-ce.url = "github:ethanholz/git-ce";
     zig.url = "github:mitchellh/zig-overlay";
+    zls-flake.url = "github:zigtools/zls";
+    grlx.url = "github:ethanholz/grlx-flake";
   };
 
   outputs = {
@@ -17,31 +19,18 @@
     home-manager,
     git-ce,
     zig,
+    zls-flake,
+    grlx,
     ...
   }: let
-    # version = "1.20.7";
-    # goverlay = final: prev: {
-    #   go =
-    #     prev.go.overrideAttrs
-    #     (old: {
-    #       inherit version;
-    #       src =
-    #         final.fetchurl
-    #         {
-    #           url = "https://go.dev/dl/go${version}.src.tar.gz";
-    #           sha256 = "15zm41sv4hp5yks3igvjh4fya1i3yv9zxgf2pc6knwqyxk4yjpic";
-    #         };
-    #     });
-    # };
     system = "x86_64-linux";
     gitce = git-ce.packages.${system}.default;
+    zls = zls-flake.packages.${system}.default;
     pkgs = import nixpkgs {
       inherit system;
       overlays = [ zig.overlays.default ];
-    };
-    gopkgs = import nixpkgs {
-      inherit system;
-      # overlays = [goverlay];
+    config = { allowUnfree = true; };
+        
     };
   in {
     homeConfigurations."ethan" = home-manager.lib.homeManagerConfiguration {
@@ -49,8 +38,8 @@
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
-      modules = [./home.nix ./lsp.nix ];
-      extraSpecialArgs = {inherit gopkgs gitce;};
+      modules = [./home.nix ./lsp.nix ./ocaml.nix];
+      extraSpecialArgs = {inherit gitce grlx zls;};
 
       # Optionally use extraSpecialArgs
       # to pass through arguments to home.nix

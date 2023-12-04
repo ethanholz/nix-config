@@ -1,13 +1,14 @@
 { config
 , pkgs
-, gopkgs
 , gitce
+, grlx
 , ...
 }:
 let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
+grlx-cli = grlx.packages.x86_64-linux.default;
   alacrittyTheme = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
     sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
@@ -32,6 +33,7 @@ in
   # environment.
   home.packages = [
     git-ce
+    grlx-cli
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -88,13 +90,23 @@ in
     pkgs.gh
     pkgs.yubikey-manager
     pkgs.helix
-    pkgs.zigpkgs.default
+    pkgs.zigpkgs.master
     pkgs.tailwindcss
     pkgs.terraform
     pkgs.valgrind
     pkgs.openmm
     pkgs.python311
     pkgs.ttyd
+    pkgs.distrobox
+    pkgs.slides
+    pkgs.nushell
+    pkgs.zoxide
+    pkgs.nix-prefetch-github
+    pkgs.haskellPackages.patat
+    pkgs.poop
+    pkgs.kcov
+    pkgs.texliveTeTeX
+    pkgs.act
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -111,6 +123,7 @@ in
     #   org.gradle.daemon.idletimeout=3600000
     # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
+    ".config/ghostty/config".source = ./ghostty/config;
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
     ".config/zellij/config.kdl".source = ./zellij/config.kdl;
     ".config/zellij/layouts/ssh-layout.kdl".source =
@@ -137,10 +150,10 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.go = {
-    enable = true;
-    package = pkgs.go_1_21;
-  };
+  # programs.go = {
+  #   enable = true;
+  #   package = pkgs.go_1_21;
+  # };
 
   programs.gitui = {
     enable = true;
