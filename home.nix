@@ -1,20 +1,19 @@
-{ config
-, pkgs
-, gitce
-, grlx
-, ...
-}:
-let
+{
+  config,
+  pkgs,
+  gitce,
+  grlx,
+  ...
+}: let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
-grlx-cli = grlx.packages.x86_64-linux.default;
+  grlx-cli = grlx.packages.x86_64-linux.default;
   alacrittyTheme = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
     sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
   };
-in
-{
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = user;
@@ -107,6 +106,7 @@ in
     pkgs.kcov
     pkgs.texliveTeTeX
     pkgs.act
+    pkgs.poetry
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -125,13 +125,6 @@ in
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/ghostty/config".source = ./ghostty/config;
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
-    ".config/zellij/config.kdl".source = ./zellij/config.kdl;
-    ".config/zellij/layouts/ssh-layout.kdl".source =
-      pkgs.writeText "ssh-layout.kdl"
-        ''
-          layout {
-          }
-        '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -240,6 +233,7 @@ in
     ];
     extraConfig = {
       url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
+      url."git@github.com:".insteadOf = "https://github.com/";
       difftool.prompt = true;
       difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
       diff.tool = "nvimdiff";
@@ -318,10 +312,9 @@ in
         "bind \"Ctrl j\"" = {MoveFocus = "Down";};
         "bind \"Ctrl k\"" = {MoveFocus = "Up";};
         "bind \"Ctrl l\"" = {MoveFocus = "Right";};
-       };
+      };
     };
   };
-
 
   # programs.alacritty = {
   #   enable = true;
