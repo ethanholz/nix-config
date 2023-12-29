@@ -28,9 +28,8 @@
     zls = zls-flake.packages.${system}.default;
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [ zig.overlays.default ];
-    config = { allowUnfree = true; };
-        
+      overlays = [zig.overlays.default];
+      config = {allowUnfree = true;};
     };
   in {
     homeConfigurations."ethan" = home-manager.lib.homeManagerConfiguration {
