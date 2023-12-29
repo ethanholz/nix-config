@@ -280,6 +280,46 @@ in
 
   programs.zellij = {
     enable = true;
+    settings = {
+      copy_command = "wl-copy";
+      default_shell = "zsh";
+      theme = "terafox";
+      themes = {
+        terafox = {
+          bg = "#152528";
+          fg = "#e6eaea";
+          red = "#e85c51";
+          green = "#7aa4a1";
+          blue = "#5a93aa";
+          yellow = "#fda47f";
+          magenta = "#ad5c7c";
+          orange = "#ff8349";
+          cyan = "#a1cdd8";
+          black = "#254147";
+          white = "#cbd9d8";
+        };
+        modified_carbonfox = {
+          bg = "#b6b8bb";
+          black = "#161616";
+          blue = "#78a9ff";
+          cyan = "#33b1ff";
+          fg = "#f2f4f8";
+          green = "#de3163";
+          magenta = "#be95ff";
+          orange = "#3ddbd9";
+          red = "#ee5396";
+          white = "#b6b8bb";
+          yellow = "#08bdba";
+        };
+      };
+      keybinds.locked = {
+        "bind \"Ctrl p\"" = {SwitchToMode = "Pane";};
+        "bind \"Ctrl h\"" = {MoveFocus = "Left";};
+        "bind \"Ctrl j\"" = {MoveFocus = "Down";};
+        "bind \"Ctrl k\"" = {MoveFocus = "Up";};
+        "bind \"Ctrl l\"" = {MoveFocus = "Right";};
+       };
+    };
   };
 
 
