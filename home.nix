@@ -18,6 +18,11 @@ in {
   # manage.
   home.username = user;
   home.homeDirectory = base;
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "/usr/local/go/bin"
+  ];
+  # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -99,7 +104,6 @@ in {
     pkgs.distrobox
     pkgs.slides
     pkgs.nushell
-    pkgs.zoxide
     pkgs.nix-prefetch-github
     pkgs.haskellPackages.patat
     pkgs.poop
@@ -125,6 +129,7 @@ in {
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/ghostty/config".source = ./ghostty/config;
     ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
+    ".zsh/plugins/zsh-functions/zsh-functions.zsh".source = ./zsh/zsh-functions.zsh;
   };
 
   # You can also manage environment variables but you will have to manually
@@ -314,6 +319,49 @@ in {
         "bind \"Ctrl l\"" = {MoveFocus = "Right";};
       };
     };
+  };
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      ls = "exa --icons";
+      python = "python3";
+      zs = "zellij-session-create";
+      zlist = "zellij-list";
+      zis = "zellij-session";
+      zd = "zellij-delete";
+      update = "sudo apt update && sudo apt upgrade && flatpak update";
+    };
+    enableCompletion = false;
+    completionInit = "skip_global_compinit=1";
+    syntaxHighlighting.enable = true;
+    enableAutosuggestions = true;
+    defaultKeymap = "viins";
+    plugins = [
+      {
+        name = "zsh-autocomplete";
+        src = pkgs.zsh-autocomplete.src;
+      }
+    ];
+    sessionVariables = {
+      EDITOR = "nvim";
+      SUDO_EDITOR = "nvim";
+      GPG_TTY = "$(tty)";
+      SSH_AUTH_SOCK = "/run/user/$UID/gnupg/S.gpg-agent.ssh";
+    };
+    initExtra = ''
+      gpg-connect-agent updatestartuptty /bye >/dev/null
+      source $HOME/.zsh/plugins/zsh-functions/zsh-functions.zsh
+    '';
+  };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   # programs.alacritty = {
