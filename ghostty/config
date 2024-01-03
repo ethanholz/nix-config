@@ -2,32 +2,33 @@ font-family = GeistMono Nerd Font
 font-style = Regular
 font-size = 14
 command = zsh
-background  = #161616
-foreground = #f2f4f8
+background  = #152528
+foreground = #e6eaea
 cursor-color = #f2f4f8
 cursor-style = block
-selection-foreground= #f2f4f8
-selection-background = #2a2a2a
+selection-foreground= #e6eaea
+selection-background = #293e40
 gtk-adwaita = false
 
 # normal
-palette = 0=#282828
-palette = 1=#ee5396
-palette = 2=#25be6a
-palette = 3=#08bdba
-palette = 4=#78a9ff
-palette = 5=#be95ff
-palette = 6=#33b1ff
-palette = 7=#dfdfe0
+palette = 0=#2f3239
+palette = 1=#e85c51
+palette = 2=#7aa4a1
+palette = 3=#fda47f
+palette = 4=#5a93aa
+palette = 5=#ad5c7c
+palette = 6=#a1cdd8
+palette = 7=#ebebeb
 
 # bright
-palette = 8=#484848
-palette = 9=#f16da6
-palette = 10=#46c880
-palette = 11=#2dc7c4
-palette = 12=#8cb6ff
-palette = 13=#c8a5ff
-palette = 14=#52bdff
-palette = 15=#e4e4e5
+palette = 8=#4e5157
+palette = 9=#eb746b
+palette = 10=#8eb2af
+palette = 11=#fdb292
+palette = 12=#73a3b7
+palette = 13=#b97490
+palette = 14=#afd4de
+palette = 15=#eeeeee
 
-palette = 16=#282828
+# extended colors
+palette = 16=#ff8349
