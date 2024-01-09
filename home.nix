@@ -111,6 +111,7 @@ in {
     pkgs.texliveTeTeX
     pkgs.act
     pkgs.poetry
+    pkgs.delta
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -229,7 +230,12 @@ in {
       "salt-server.log"
       ".ccls*"
       "commit_convention.yml"
+      ".direnv/"
+      ".envrc"
     ];
+    delta = {
+      enable = true;
+    };
     includes = [
       {
         condition = "gitdir:${base}/Documents/code/work/**/*";
@@ -239,9 +245,9 @@ in {
     extraConfig = {
       url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
       url."git@github.com:".insteadOf = "https://github.com/";
-      difftool.prompt = true;
-      difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
-      diff.tool = "nvimdiff";
+      # difftool.prompt = true;
+      # difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
+      # diff.tool = "nvimdiff";
       init.defaultBranch = "main";
       rebase.autoStash = true;
     };
@@ -249,6 +255,7 @@ in {
 
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
     settings = {
       character = {
         success_symbol = "[❯](purple)";
@@ -353,6 +360,14 @@ in {
       source $HOME/.zsh/plugins/zsh-functions/zsh-functions.zsh
     '';
   };
+
+  programs.bat = {
+    enable = true;
+    extraPackages = with pkgs.bat-extras; [
+      batgrep
+    ];
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
