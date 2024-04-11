@@ -3,16 +3,17 @@
   pkgs,
   gitce,
   grlx,
+  freeze,
   ...
 }: let
   user = "ethan";
   base = "/home/${user}";
   git-ce = gitce;
   grlx-cli = grlx.packages.x86_64-linux.default;
-  alacrittyTheme = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/d2d26f1f02a800c6a5776a698b7ed4344332d8d5/extra/carbonfox/nightfox_alacritty.yml";
-    sha256 = "0df8pgsn5lk8mym1lcqarr67mjf2rhj8hz6f6n1wmdygzg2yc422";
-  };
+  # alacrittyTheme = pkgs.fetchurl {
+  #   url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/terafox/alacritty.toml";
+  #   sha256 = "1q7cq7gc7s3pfa807rg4vc5ss78xngz136pa9a6vrvkwark40mjv";
+  # };
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -21,6 +22,11 @@ in {
   home.sessionPath = [
     "$HOME/.local/bin"
     "/usr/local/go/bin"
+    "$HOME/go/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/.cache/rebar3/bin"
+    "$HOME/.pixi/bin"
+    "$HOME/.bun/bin"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -36,6 +42,7 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    freeze
     git-ce
     grlx-cli
     # # Adds the 'hello' command to your environment. It prints a friendly
@@ -54,6 +61,7 @@ in {
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    pkgs.pfetch
     pkgs.fd
     pkgs.govulncheck
     pkgs.revive
@@ -88,48 +96,47 @@ in {
     pkgs.nfpm
     pkgs.wasmtime
     pkgs.wabt
-    pkgs.tinygo
     pkgs.wazero
     pkgs.rust-analyzer
-    pkgs.gh
     pkgs.yubikey-manager
     pkgs.helix
     pkgs.zigpkgs.master
     pkgs.tailwindcss
-    pkgs.terraform
     pkgs.valgrind
-    pkgs.openmm
-    pkgs.python311
     pkgs.ttyd
     pkgs.distrobox
     pkgs.slides
     pkgs.nushell
     pkgs.nix-prefetch-github
-    pkgs.haskellPackages.patat
     pkgs.poop
     pkgs.kcov
-    pkgs.texliveTeTeX
     pkgs.act
-    pkgs.poetry
     pkgs.delta
+    pkgs.stripe-cli
+    pkgs.extism-cli
+    pkgs.uv
+    pkgs.micromamba
+    pkgs.cookiecutter
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/ghostty/config".source = ./ghostty/config;
-    ".config/alacritty/carbonfox.yml".source = alacrittyTheme;
+    ".config/alacritty/terafox.toml".source = ./terafox.toml;
+    ".config/alacritty/alacritty.toml".text = ''
+      import = [ "~/.config/alacritty/terafox.toml" ]
+      [font]
+      size = 14.0
+      [font.normal]
+      family = "GeistMono Nerd Font"
+      [shell]
+      # program = "${pkgs.zsh}/bin/zsh"
+      program = "${pkgs.fish}/bin/fish"
+      [window]
+      opacity = 0.90
+    '';
     ".zsh/plugins/zsh-functions/zsh-functions.zsh".source = ./zsh/zsh-functions.zsh;
   };
 
@@ -143,7 +150,7 @@ in {
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    editor = "nvim";
   };
 
   # Let Home Manager install and manage itself.
@@ -241,15 +248,21 @@ in {
         condition = "gitdir:${base}/Documents/code/work/**/*";
         path = "${base}/Documents/code/work/.gitconfig-work";
       }
+      {
+        condition = "gitdir:${base}/Documents/code/work/";
+        path = "${base}/Documents/code/work/.gitconfig-work";
+      }
     ];
     extraConfig = {
-      url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
-      url."git@github.com:".insteadOf = "https://github.com/";
+      # url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
+      # url."git@github.com:".insteadOf = "https://github.com/";
       # difftool.prompt = true;
       # difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
       # diff.tool = "nvimdiff";
       init.defaultBranch = "main";
       rebase.autoStash = true;
+      push.autoSetupRemote = true;
+      core.editor = "nvim";
     };
   };
 
@@ -288,7 +301,7 @@ in {
     enable = true;
     settings = {
       copy_command = "wl-copy";
-      default_shell = "zsh";
+      default_shell = "fish";
       theme = "terafox";
       themes = {
         terafox = {
@@ -327,10 +340,28 @@ in {
       };
     };
   };
+  programs.fish = {
+    enable = true;
+    package = pkgs.fish;
+    functions = import fish/fish-functions.nix;
+    shellAliases = import fish/fish-alias.nix;
+    # interactiveShellInit = "set fish_greeting";
+    interactiveShellInit = ''
+      set fish_greeting
+      set EDITOR nvim
+      set SUDO_EDITOR nvim
+      set -x GPG_TTY (tty)
+      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+      # gpg-connect-agent updatestartuptty /bye >/dev/null
+      # source ~/.config/op/plugins.sh
+    '';
+  };
   programs.zsh = {
     enable = true;
+    package = pkgs.zsh;
     shellAliases = {
-      ls = "exa --icons";
+      # ls = "exa --icons";
       python = "python3";
       zs = "zellij-session-create";
       zlist = "zellij-list";
@@ -341,7 +372,7 @@ in {
     enableCompletion = false;
     completionInit = "skip_global_compinit=1";
     syntaxHighlighting.enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     defaultKeymap = "viins";
     plugins = [
       {
@@ -358,6 +389,7 @@ in {
     initExtra = ''
       gpg-connect-agent updatestartuptty /bye >/dev/null
       source $HOME/.zsh/plugins/zsh-functions/zsh-functions.zsh
+      eval $(opam env)
     '';
   };
 
@@ -377,17 +409,30 @@ in {
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
+  };
+  programs.eza = {
+    enable = true;
+    icons = true;
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      editor = "nvim";
+      protocol = "ssh";
+    };
   };
 
   # programs.alacritty = {
   #   enable = true;
   #   settings = {
-  #     import = [ "~/.config/alacritty/carbonfox.yml" ];
+  #     import = [ "~/.config/alacritty/terafox.toml" ];
   #     font = {
-  #       normal.family = "JetBrains Mono Nerd Font";
+  #       normal.family = "GeistMono Nerd Font";
   #       size = 14.0;
   #     };
-  #     shell.program = "/bin/zsh";
+  #     shell.program = "${pkgs.zsh}/bin/zsh";
   #   };
   # };
 }

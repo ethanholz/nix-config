@@ -11,6 +11,8 @@
     pkgs.gopls
     pkgs.ansible-language-server
     pkgs.ansible-lint
+    pkgs.stylua
+    pkgs.terraform-ls
     zls
   ];
 }
