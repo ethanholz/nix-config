@@ -43,7 +43,7 @@
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
-      modules = [./home.nix ./lsp.nix ./ocaml.nix];
+      modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
       extraSpecialArgs = {inherit gitce grlx zls freeze;};
 
       # Optionally use extraSpecialArgs

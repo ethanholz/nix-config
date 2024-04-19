@@ -10,6 +10,10 @@
   base = "/home/${user}";
   git-ce = gitce;
   grlx-cli = grlx.packages.x86_64-linux.default;
+  zellij-rose-pine = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
+    sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
+  };
   # alacrittyTheme = pkgs.fetchurl {
   #   url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/terafox/alacritty.toml";
   #   sha256 = "1q7cq7gc7s3pfa807rg4vc5ss78xngz136pa9a6vrvkwark40mjv";
@@ -75,6 +79,7 @@ in {
     pkgs.gitleaks
     pkgs.natscli
     pkgs.nixd
+    # Git
     pkgs.git-lfs
     pkgs.bfg-repo-cleaner
     pkgs.minicom
@@ -83,7 +88,6 @@ in {
     pkgs.hurl
     pkgs.git-cliff
     pkgs.google-cloud-sdk
-    # node
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
     pkgs.nodejs_20
@@ -91,7 +95,6 @@ in {
     pkgs.yq-go
     pkgs.elixir
     pkgs.ranger
-    pkgs.wally-cli
     pkgs.goreleaser
     pkgs.nfpm
     pkgs.wasmtime
@@ -104,19 +107,13 @@ in {
     pkgs.tailwindcss
     pkgs.valgrind
     pkgs.ttyd
-    pkgs.distrobox
-    pkgs.slides
-    pkgs.nushell
     pkgs.nix-prefetch-github
     pkgs.poop
     pkgs.kcov
     pkgs.act
     pkgs.delta
-    pkgs.stripe-cli
     pkgs.extism-cli
-    pkgs.uv
-    pkgs.micromamba
-    pkgs.cookiecutter
+    pkgs.neovim
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -124,6 +121,7 @@ in {
   home.file = {
     ".config/revive/revive.toml".source = ./revive/revive.toml;
     ".config/ghostty/config".source = ./ghostty/config;
+    ".config/zellij/themes/rose-pine.kdl".source = zellij-rose-pine;
     ".config/alacritty/terafox.toml".source = ./terafox.toml;
     ".config/alacritty/alacritty.toml".text = ''
       import = [ "~/.config/alacritty/terafox.toml" ]
@@ -155,11 +153,6 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # programs.go = {
-  #   enable = true;
-  #   package = pkgs.go_1_21;
-  # };
 
   programs.gitui = {
     enable = true;
@@ -302,7 +295,7 @@ in {
     settings = {
       copy_command = "wl-copy";
       default_shell = "fish";
-      theme = "terafox";
+      theme = "rose-pine";
       themes = {
         terafox = {
           bg = "#152528";
@@ -424,15 +417,4 @@ in {
     };
   };
 
-  # programs.alacritty = {
-  #   enable = true;
-  #   settings = {
-  #     import = [ "~/.config/alacritty/terafox.toml" ];
-  #     font = {
-  #       normal.family = "GeistMono Nerd Font";
-  #       size = 14.0;
-  #     };
-  #     shell.program = "${pkgs.zsh}/bin/zsh";
-  #   };
-  # };
 }
