@@ -114,6 +114,7 @@ in {
     pkgs.delta
     pkgs.extism-cli
     pkgs.neovim
+    pkgs.fermyon-spin
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
