@@ -56,8 +56,8 @@ in {
             imports = [
               (import ./shared/home.nix {inherit inputs pkgs userName;})
               (import ./shared/lsp.nix {inherit inputs pkgs;})
-              (import ./shared/python.nix {inherit pkgs;})
-              (import ./shared/ocaml.nix {inherit pkgs;})
+              (import ./shared/python.nix {inherit inputs pkgs;})
+              (import ./shared/ocaml.nix {inherit inputs pkgs;})
             ];
           };
           # home-manager.extraSpecialArgs = {inherit gitce freeze zls pkgs userName;};
