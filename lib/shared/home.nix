@@ -1,15 +1,18 @@
 {
-  config,
+  inputs,
   pkgs,
-  gitce,
-  grlx,
-  freeze,
+  userName,
   ...
 }: let
-  user = "ethan";
-  base = "/home/${user}";
-  git-ce = gitce;
-  grlx-cli = grlx.packages.x86_64-linux.default;
+  system = pkgs.system;
+  freeze = inputs.freeze-flake.packages.${system}.default;
+  gitce = inputs.git-ce.packages.${system}.default;
+  zig = inputs.zig.packages.${system}.master;
+  base =
+    if pkgs.stdenv.isDarwin
+    then "/Users/${userName}"
+    else "/home/${userName}";
+  # base = "/Users/${userName}";
   zellij-rose-pine = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
@@ -19,18 +22,18 @@
   #   sha256 = "1q7cq7gc7s3pfa807rg4vc5ss78xngz136pa9a6vrvkwark40mjv";
   # };
 in {
+  home.username = userName;
+  home.homeDirectory = base;
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = user;
-  home.homeDirectory = base;
   home.sessionPath = [
     "$HOME/.local/bin"
-    "/usr/local/go/bin"
     "$HOME/go/bin"
     "$HOME/.cargo/bin"
     "$HOME/.cache/rebar3/bin"
     "$HOME/.pixi/bin"
     "$HOME/.bun/bin"
+    "/opt/homebrew/bin"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -41,14 +44,14 @@ in {
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
     freeze
-    git-ce
-    grlx-cli
+    gitce
+    zig
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -103,27 +106,45 @@ in {
     pkgs.rust-analyzer
     pkgs.yubikey-manager
     pkgs.helix
-    pkgs.zigpkgs.master
+    # pkgs.zigpkgs.master
     pkgs.tailwindcss
-    pkgs.valgrind
     pkgs.ttyd
     pkgs.nix-prefetch-github
-    pkgs.poop
-    pkgs.kcov
     pkgs.act
     pkgs.delta
     pkgs.extism-cli
     pkgs.neovim
     pkgs.fermyon-spin
+    pkgs.htop
+    pkgs.btop
+    pkgs.stow
+    # Python
+    pkgs.uv
+    pkgs.micromamba
+    pkgs.cookiecutter
+    pkgs.ruff
+    pkgs.pyright
+    # pkgs.python3
+    pkgs.wally-cli
+    pkgs.ffmpeg
+    pkgs.actionlint
+    pkgs.jupyter
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/revive/revive.toml".source = ./revive/revive.toml;
-    ".config/ghostty/config".source = ./ghostty/config;
+    # ".config/ghostty/config".source = ./ghostty/config;
+    ".config/ghostty/config".text = ''
+      font-family = GeistMono Nerd Font
+      font-style = Regular
+      font-size = 16
+      theme = rose-pine-moon
+      command = ${pkgs.fish}/bin/fish
+      font-thicken = true
+      quit-after-last-window-closed = true
+    '';
     ".config/zellij/themes/rose-pine.kdl".source = zellij-rose-pine;
-    ".config/alacritty/terafox.toml".source = ./terafox.toml;
     ".config/alacritty/alacritty.toml".text = ''
       import = [ "~/.config/alacritty/terafox.toml" ]
       [font]
@@ -154,6 +175,10 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.lazygit = {
+    enable = true;
+  };
 
   programs.gitui = {
     enable = true;
@@ -234,13 +259,17 @@ in {
       ".direnv/"
       ".envrc"
     ];
-    delta = {
-      enable = true;
-    };
+    # delta = {
+    #   enable = true;
+    # };
     includes = [
       {
         condition = "gitdir:${base}/Documents/code/work/**/*";
         path = "${base}/Documents/code/work/.gitconfig-work";
+      }
+      {
+        condition = "gitdir:${base}/Documents/work/**/*";
+        path = "${base}/Documents/work/.gitconfig-work";
       }
       {
         condition = "gitdir:${base}/Documents/code/work/";
@@ -344,9 +373,9 @@ in {
       set fish_greeting
       set EDITOR nvim
       set SUDO_EDITOR nvim
-      set -x GPG_TTY (tty)
-      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-      gpgconf --launch gpg-agent
+       set -x GPG_TTY (tty)
+       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+       gpgconf --launch gpg-agent
       # gpg-connect-agent updatestartuptty /bye >/dev/null
       # source ~/.config/op/plugins.sh
     '';
@@ -377,13 +406,17 @@ in {
     sessionVariables = {
       EDITOR = "nvim";
       SUDO_EDITOR = "nvim";
-      GPG_TTY = "$(tty)";
-      SSH_AUTH_SOCK = "/run/user/$UID/gnupg/S.gpg-agent.ssh";
+      # GPG_TTY = "$(tty)";
+      # SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+      # SSH_AUTH_SOCK = "/run/user/$UID/gnupg/S.gpg-agent.ssh";
     };
     initExtra = ''
-      gpg-connect-agent updatestartuptty /bye >/dev/null
+      # gpg-connect-agent updatestartuptty /bye >/dev/null
       source $HOME/.zsh/plugins/zsh-functions/zsh-functions.zsh
-      eval $(opam env)
+      export GPG_TTY=$(tty)
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+      # eval $(opam env)
     '';
   };
 

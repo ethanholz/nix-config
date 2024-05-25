@@ -1,8 +1,9 @@
 update:
     nix flake update
-    home-manager switch
-switch:
-    home-manager switch
+switch-ha:
+    home-manager switch --flake .
+switch-darwin:
+   darwin-rebuild switch --flake .
 fmt:
     nix fmt
 prefetch url:

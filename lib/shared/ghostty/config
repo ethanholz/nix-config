@@ -1,8 +1,8 @@
 font-family = GeistMono Nerd Font
 font-style = Regular
 font-size = 14
-command = fish
 theme = rose-pine-moon
+shell = fish
 # background  = #152528
 # foreground = #e6eaea
 # cursor-color = #f2f4f8

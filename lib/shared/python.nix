@@ -1,8 +1,5 @@
 {
-  config,
   pkgs,
-  gitce,
-  zls,
   ...
 }: {
   home.packages = [

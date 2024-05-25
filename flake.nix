@@ -1,54 +1,39 @@
 {
-  description = "Home Manager configuration of ethan";
+  description = "Example Darwin system flake";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    git-ce.url = "github:ethanholz/git-ce";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     freeze-flake.url = "github:charmbracelet/freeze";
     zig.url = "github:mitchellh/zig-overlay";
+    git-ce.url = "github:ethanholz/git-ce";
     zls-flake = {
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    grlx.url = "github:ethanholz/grlx-flake";
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    git-ce,
-    zig,
-    zls-flake,
-    grlx,
-    freeze-flake,
+  outputs = inputs @ {
+    self,
+    flake-parts,
     ...
   }: let
-    system = "x86_64-linux";
-    gitce = git-ce.packages.${system}.default;
-    zls = zls-flake.packages.${system}.default;
-    freeze = freeze-flake.packages.${system}.default;
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = [zig.overlays.default];
-      config = {allowUnfree = true;};
-    };
-  in {
-    homeConfigurations."ethan" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+    mkDarwin = self.lib.mkDarwin {};
+    mkStandalone = self.lib.mkStandalone {};
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      flake = {
+        lib = import ./lib {inherit inputs;};
+        darwinConfigurations."Ethans-Laptop" = mkDarwin {system = "aarch64-darwin";};
+        homeConfigurations."ethan" = mkStandalone {system = "x86_64-linux";};
+      };
 
-      # Specify your home configuration modules here, for example,
-      # the path to your home.nix.
-      modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
-      extraSpecialArgs = {inherit gitce grlx zls freeze;};
-
-      # Optionally use extraSpecialArgs
-      # to pass through arguments to home.nix
+      systems = ["aarch64-darwin" "x86_64-linux"];
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.alejandra;
+      };
     };
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
-  };
 }

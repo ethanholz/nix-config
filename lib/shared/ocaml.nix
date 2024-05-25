@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  gitce,
   ...
 }: {
   home.packages = [
