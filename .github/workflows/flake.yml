@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-standalone:
     name: Buid Standalone HM
     runs-on: ubuntu-latest
     steps:
@@ -20,4 +20,17 @@ jobs:
 
       - name: Build Standalone Home-Manager Install
         run: nix run home-manager/master -- build --flake .
-  
+
+  build-macos:
+    name: Buid macOS HM
+    runs-on: macos-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Build Standalone Home-Manager Install
+        run: nix build "darwinConfigurations.Ethans-Laptop.config.system.build.toplevel"
+
