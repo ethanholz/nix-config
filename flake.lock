@@ -205,11 +205,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1717249675,
-        "narHash": "sha256-zBPrOyom5gXYr3bB/XEym4dSBYbbGL349ofTNP7UVfs=",
+        "lastModified": 1717770004,
+        "narHash": "sha256-K+tEzExaHwwbo8/8nGBYl6xtBJAl1x+SUB7uR/FAQhg=",
         "owner": "ethanholz",
         "repo": "git-ce",
-        "rev": "8b4dc7f134b1adfb982ffb2edd64899791e28bab",
+        "rev": "e03225ab06797a6567083d92de9ff7ec21743057",
         "type": "github"
       },
       "original": {
