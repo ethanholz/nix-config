@@ -6,6 +6,7 @@
 }: let
   system = pkgs.system;
   freeze = inputs.freeze-flake.packages.${system}.default;
+  action-table = inputs.action-table.packages.${system}.default;
   gitce = inputs.git-ce.packages.${system}.default;
   zig = inputs.zig.packages.${system}.master;
   base =
@@ -52,6 +53,7 @@ in {
     freeze
     gitce
     zig
+    action-table
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -175,6 +177,8 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.go.enable = true;
 
   programs.lazygit = {
     enable = true;
