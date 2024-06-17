@@ -40,7 +40,7 @@
       };
     };
   nixConfig = {
-    extra-substituters = ["https://git-ce.cachix.org"];
-    extra-trusted-public-keys = ["git-ce.cachix.org-1:U+Gm5iuIbU4Q/RKIlK1eCB5HPXH5eqDTlp4tbOjG30M="];
+    extra-substituters = ["https://git-ce.cachix.org" "https://action-table.cachix.org"];
+    extra-trusted-public-keys = ["git-ce.cachix.org-1:U+Gm5iuIbU4Q/RKIlK1eCB5HPXH5eqDTlp4tbOjG30M=" "action-table.cachix.org-1:IbI8XIJqLPAuAPS4c9X86ZJ0vgwwJpZHXO38IbknRAQ="];
   };
 }
