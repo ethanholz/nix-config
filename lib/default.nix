@@ -4,10 +4,10 @@
 in {
   mkStandalone = {userName ? defaultUsername}: {system}:
     inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = import pkgs {inherit system;};
+      pkgs = import pkgs {inherit system; config.allowUnfree = true;};
       modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix];
       # modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
-      extraSpecialArgs = {inherit inputs userName;};
+      extraSpecialArgs = {inherit inputs userName; };
     };
   mkDarwin = {userName ? defaultUsername}: {system}:
     inputs.nix-darwin.lib.darwinSystem {
