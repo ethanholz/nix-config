@@ -131,6 +131,11 @@ in {
     pkgs.ffmpeg
     pkgs.actionlint
     pkgs.jupyter
+    pkgs.dive
+    pkgs.terraform
+    pkgs.croc
+    pkgs.pipx
+    pkgs.glow
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
