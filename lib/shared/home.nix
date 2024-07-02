@@ -18,10 +18,6 @@
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
   };
-  # alacrittyTheme = pkgs.fetchurl {
-  #   url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/main/extra/terafox/alacritty.toml";
-  #   sha256 = "1q7cq7gc7s3pfa807rg4vc5ss78xngz136pa9a6vrvkwark40mjv";
-  # };
 in {
   home.username = userName;
   home.homeDirectory = base;
@@ -35,6 +31,7 @@ in {
     "$HOME/.pixi/bin"
     "$HOME/.bun/bin"
     "/opt/homebrew/bin"
+    "$GHOSTTY_BIN_DIR"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -136,6 +133,7 @@ in {
     pkgs.croc
     pkgs.pipx
     pkgs.glow
+    pkgs.cdxgen
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -382,6 +380,7 @@ in {
       set fish_greeting
       set EDITOR nvim
       set SUDO_EDITOR nvim
+
        set -x GPG_TTY (tty)
        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
        gpgconf --launch gpg-agent
