@@ -130,6 +130,7 @@ in {
     pkgs.jupyter
     pkgs.dive
     pkgs.terraform
+    pkgs.packer
     pkgs.croc
     pkgs.pipx
     pkgs.glow
