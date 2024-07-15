@@ -15,6 +15,7 @@
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ghostty.url = "github:clo4/ghostty-hm-module";
   };
 
   outputs = inputs @ {

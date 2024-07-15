@@ -5,7 +5,7 @@ in {
   mkStandalone = {userName ? defaultUsername}: {system}:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = import pkgs {inherit system; config.allowUnfree = true;};
-      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix];
+      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix inputs.ghostty.homeModules.default];
       # modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
       extraSpecialArgs = {inherit inputs userName; };
     };
@@ -55,6 +55,7 @@ in {
           # home-manager.users.${userName} = import ./shared/home.nix;
           home-manager.users.${userName} = {pkgs, ...}: {
             imports = [
+              inputs.ghostty.homeModules.default 
               (import ./shared/home.nix {inherit inputs pkgs userName;})
               (import ./shared/lsp.nix {inherit inputs pkgs;})
               (import ./shared/python.nix {inherit inputs pkgs;})
