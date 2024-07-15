@@ -135,6 +135,9 @@ in {
     pkgs.pipx
     pkgs.glow
     pkgs.cdxgen
+    pkgs.awscli
+    pkgs.iperf3
+    pkgs.mr
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
