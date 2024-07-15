@@ -8,7 +8,7 @@
   freeze = inputs.freeze-flake.packages.${system}.default;
   action-table = inputs.action-table.packages.${system}.default;
   gitce = inputs.git-ce.packages.${system}.default;
-  zig = inputs.zig.packages.${system}.master;
+  zig = inputs.zig.packages.${system}."0.13.0";
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
@@ -138,14 +138,18 @@ in {
     pkgs.awscli
     pkgs.iperf3
     pkgs.mr
+    pkgs.fio
+    pkgs.commit-mono
   ];
+  fonts.fontconfig.enable = true;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     # ".config/ghostty/config".source = ./ghostty/config;
     ".config/ghostty/config".text = ''
-      font-family = GeistMono Nerd Font
+      # font-family = GeistMono Nerd Font
+      font-family = CommitMono
       font-style = Regular
       font-size = 16
       theme = rose-pine-moon
@@ -167,6 +171,12 @@ in {
       opacity = 0.90
     '';
     ".zsh/plugins/zsh-functions/zsh-functions.zsh".source = ./zsh/zsh-functions.zsh;
+    ".config/zls.json".text = ''
+    {
+        "enable_build_on_save": true,
+        "build_on_save_step": "check"
+    }
+    '';
   };
 
   # You can also manage environment variables but you will have to manually
