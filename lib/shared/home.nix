@@ -140,23 +140,13 @@ in {
     pkgs.mr
     pkgs.fio
     pkgs.commit-mono
+    pkgs.geist-font
   ];
   fonts.fontconfig.enable = true;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # ".config/ghostty/config".source = ./ghostty/config;
-    ".config/ghostty/config".text = ''
-      # font-family = GeistMono Nerd Font
-      font-family = CommitMono
-      font-style = Regular
-      font-size = 16
-      theme = rose-pine-moon
-      command = ${pkgs.fish}/bin/fish
-      font-thicken = true
-      quit-after-last-window-closed = true
-    '';
     ".config/zellij/themes/rose-pine.kdl".source = zellij-rose-pine;
     ".config/alacritty/alacritty.toml".text = ''
       import = [ "~/.config/alacritty/terafox.toml" ]
@@ -470,6 +460,20 @@ in {
     settings = {
       editor = "nvim";
       protocol = "ssh";
+    };
+  };
+
+  programs.ghostty = {
+    enable = true;
+    shellIntegration.enable = true;
+    settings = {
+        font-family = "GeistMono Nerd Font";
+        font-style = "Regular";
+        font-size = 16;
+        theme = "rose-pine-moon";
+        command = "${pkgs.fish}/bin/fish";
+        font-thicken = true;
+        quit-after-last-window-closed = true;
     };
   };
 }
