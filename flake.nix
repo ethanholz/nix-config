@@ -10,7 +10,7 @@
     freeze-flake.url = "github:charmbracelet/freeze/fc03c0d7dda8eb742c0f64b4174e9d9720d50bf0";
     action-table.url = "github:ethanholz/action-table";
     zig.url = "github:mitchellh/zig-overlay";
-    git-ce.url = "github:ethanholz/git-ce";
+    git-ce.url = "https://flakehub.com/f/ethanholz/git-ce/*.tar.gz";
     zls-flake = {
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -257,17 +257,16 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1718842421,
-        "narHash": "sha256-WiKAhPmIXTdBW5PAN8MC03qxc6QMaraVOPmdBYKRlb8=",
-        "owner": "ethanholz",
-        "repo": "git-ce",
-        "rev": "acb3e2c701aad9d88476c6da7b237bd6772ed839",
-        "type": "github"
+        "lastModified": 1721081399,
+        "narHash": "sha256-ybdS+B3jZBScA34pYQknlX32GN3C4yEn0tj0p4nJLgI=",
+        "rev": "aab65570370783c5a6de5ccd2ee3229c1e1f92f2",
+        "revCount": 137,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/ethanholz/git-ce/0.3.3/0190bca1-c42d-7397-8d2d-3b4c295f54ec/source.tar.gz"
       },
       "original": {
-        "owner": "ethanholz",
-        "repo": "git-ce",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://flakehub.com/f/ethanholz/git-ce/%2A.tar.gz"
       }
     },
     "gitignore": {
