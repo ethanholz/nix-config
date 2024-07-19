@@ -4,7 +4,7 @@
   userName,
   ...
 }: let
-  system = pkgs.system;
+  inherit (pkgs) system;
   freeze = inputs.freeze-flake.packages.${system}.default;
   action-table = inputs.action-table.packages.${system}.default;
   gitce = inputs.git-ce.packages.${system}.default;
@@ -13,7 +13,6 @@
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
     else "/home/${userName}";
-  # base = "/Users/${userName}";
   zellij-rose-pine = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
@@ -151,10 +150,10 @@ in {
     '';
     ".zsh/plugins/zsh-functions/zsh-functions.zsh".source = ./zsh/zsh-functions.zsh;
     ".config/zls.json".text = ''
-    {
-        "enable_build_on_save": true,
-        "build_on_save_step": "check"
-    }
+      {
+          "enable_build_on_save": true,
+          "build_on_save_step": "check"
+      }
     '';
   };
 
@@ -456,13 +455,13 @@ in {
     enable = true;
     shellIntegration.enable = true;
     settings = {
-        font-family = "GeistMono Nerd Font";
-        font-style = "Regular";
-        font-size = 16;
-        theme = "rose-pine-moon";
-        command = "${pkgs.fish}/bin/fish";
-        font-thicken = true;
-        quit-after-last-window-closed = true;
+      font-family = "GeistMono Nerd Font";
+      font-style = "Regular";
+      font-size = 16;
+      theme = "rose-pine-moon";
+      command = "${pkgs.fish}/bin/fish";
+      font-thicken = true;
+      quit-after-last-window-closed = true;
     };
   };
 }
