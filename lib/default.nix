@@ -5,7 +5,7 @@ in {
   mkStandalone = {userName ? defaultUsername}: {system}:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = import pkgs {inherit system; config.allowUnfree = true;};
-      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix inputs.ghostty.homeModules.default];
+      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix inputs.ghostty.homeModules.default ./shared/nix.nix];
       # modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
       extraSpecialArgs = {inherit inputs userName; };
     };
@@ -52,7 +52,6 @@ in {
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          # home-manager.users.${userName} = import ./shared/home.nix;
           home-manager.users.${userName} = {pkgs, ...}: {
             imports = [
               inputs.ghostty.homeModules.default 
@@ -60,6 +59,7 @@ in {
               (import ./shared/lsp.nix {inherit inputs pkgs;})
               (import ./shared/python.nix {inherit inputs pkgs;})
               (import ./shared/ocaml.nix {inherit inputs pkgs;})
+              (import ./shared/nix.nix {inherit inputs pkgs;})
             ];
           };
           # home-manager.extraSpecialArgs = {inherit gitce freeze zls pkgs userName;};

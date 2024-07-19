@@ -80,12 +80,10 @@ in {
     pkgs.golangci-lint
     pkgs.gitleaks
     pkgs.natscli
-    pkgs.nixd
     # Git
     pkgs.git-lfs
     pkgs.bfg-repo-cleaner
     pkgs.minicom
-    pkgs.cachix
     pkgs.just
     pkgs.hurl
     pkgs.git-cliff
@@ -93,7 +91,6 @@ in {
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
     pkgs.nodejs_20
-    pkgs.alejandra
     pkgs.yq-go
     pkgs.elixir
     pkgs.ranger
@@ -108,22 +105,13 @@ in {
     # pkgs.zigpkgs.master
     pkgs.tailwindcss
     pkgs.ttyd
-    pkgs.nix-prefetch-github
     pkgs.act
-    pkgs.delta
-    pkgs.extism-cli
+    # pkgs.extism-cli
     pkgs.neovim
     pkgs.fermyon-spin
     pkgs.htop
     pkgs.btop
     pkgs.stow
-    # Python
-    pkgs.uv
-    pkgs.micromamba
-    pkgs.cookiecutter
-    pkgs.ruff
-    pkgs.pyright
-    # pkgs.python3
     pkgs.wally-cli
     pkgs.ffmpeg
     pkgs.actionlint
@@ -141,6 +129,7 @@ in {
     pkgs.fio
     pkgs.commit-mono
     pkgs.geist-font
+    pkgs.flyctl
   ];
   fonts.fontconfig.enable = true;
 
