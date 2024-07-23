@@ -19,7 +19,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Build Standalone Home-Manager Install
-        run: nix run -c just build-home-manager
+        run: nix develop -c just build-home-manager
 
   build-macos:
     name: Buid macOS HM
@@ -32,4 +32,4 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Build Darwin Install
-        run: nix run -c just build-darwin
+        run: nix develop -c just build-darwin
