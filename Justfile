@@ -9,7 +9,7 @@ fmt:
 prefetch url:
     @nix-prefetch-url {{url}} --type sha256 2> /dev/null | xargs wl-copy
 build profile:
-    nix build --json --no-link --print-build-logs "{{ profile }}" \
+    nix build --json --no-link --print-build-logs --accept-flake-config "{{ profile }}" \
     | jq -r ".[0].outputs.out"
 build-home-manager name="ethan":
     just build ".#homeConfigurations.{{name}}.activationPackage"
