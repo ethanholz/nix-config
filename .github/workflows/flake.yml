@@ -19,7 +19,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Build Standalone Home-Manager Install
-        run: nix run --accept-flake-config home-manager/master -- build --flake .
+        run: nix run -c just build-home-manager
 
   build-macos:
     name: Buid macOS HM
@@ -31,6 +31,5 @@ jobs:
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@main
 
-      - name: Build Standalone Home-Manager Install
-        run: nix build ".#darwinConfigurations.Ethans-Laptop.config.system.build.toplevel" --accept-flake-config
-
+      - name: Build Darwin Install
+        run: nix run -c just build-darwin

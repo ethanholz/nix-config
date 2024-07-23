@@ -39,7 +39,7 @@
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.just ];
+            buildInputs = [ pkgs.just pkgs.jq ];
         };
       };
     };
