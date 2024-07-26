@@ -5,6 +5,7 @@
 }: let
   system = pkgs.system;
   zls = inputs.zls-flake.packages.${system}.default;
+  superhtml = inputs.superhtml.packages.${system}.default;
 in {
   home.packages = [
     pkgs.lua-language-server
@@ -16,6 +17,7 @@ in {
     pkgs.stylua
     pkgs.terraform-ls
     zls
+    superhtml
     pkgs.ruff-lsp
   ];
 }
