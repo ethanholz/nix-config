@@ -80,11 +80,9 @@ in {
     pkgs.gitleaks
     pkgs.natscli
     # Git
-    pkgs.git-lfs
     pkgs.bfg-repo-cleaner
     pkgs.minicom
     pkgs.just
-    pkgs.hurl
     pkgs.git-cliff
     pkgs.google-cloud-sdk
     pkgs.nodePackages.typescript
@@ -121,7 +119,6 @@ in {
     pkgs.croc
     pkgs.pipx
     pkgs.glow
-    pkgs.cdxgen
     pkgs.awscli
     pkgs.iperf3
     pkgs.mr
@@ -129,6 +126,7 @@ in {
     pkgs.commit-mono
     pkgs.geist-font
     pkgs.flyctl
+    pkgs.libwebp
   ];
   fonts.fontconfig.enable = true;
 
@@ -251,6 +249,7 @@ in {
       key = "B4E94FDF35334301";
       signByDefault = true;
     };
+    lfs.enable = true;
     ignores = [
       "salt-server.log"
       ".ccls*"
