@@ -99,7 +99,6 @@ in {
     pkgs.rust-analyzer
     pkgs.yubikey-manager
     pkgs.helix
-    # pkgs.zigpkgs.master
     pkgs.tailwindcss
     pkgs.ttyd
     pkgs.act
@@ -114,8 +113,7 @@ in {
     pkgs.actionlint
     pkgs.jupyter
     pkgs.dive
-    pkgs.terraform
-    pkgs.packer
+    pkgs.opentofu
     pkgs.croc
     pkgs.pipx
     pkgs.glow
