@@ -19,7 +19,6 @@ in {
     pkgs.terraform-ls
     zls
     superhtml
-    ziggy
-    pkgs.ruff-lsp
-  ];
+    # The below is because ziggy is currently broken on linux
+  ] ++ (if pkgs.stdenv.isDarwin then [ziggy] else []);
 }
