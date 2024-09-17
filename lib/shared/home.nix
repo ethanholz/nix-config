@@ -13,6 +13,7 @@
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
     else "/home/${userName}";
+  font-size = if pkgs.stdenv.isDarwin then 16 else 14;
   zellij-rose-pine = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
@@ -453,9 +454,9 @@ in {
     enable = true;
     shellIntegration.enable = true;
     settings = {
+        inherit font-size;
       font-family = "GeistMono Nerd Font";
       font-style = "Regular";
-      font-size = 16;
       theme = "rose-pine-moon";
       command = "${pkgs.fish}/bin/fish";
       font-thicken = true;
