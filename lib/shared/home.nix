@@ -126,7 +126,8 @@ in {
     pkgs.geist-font
     pkgs.flyctl
     pkgs.libwebp
-    pkgs.zon2nix
+    pkgs.yt-dlp
+    pkgs.vhs
   ];
   fonts.fontconfig.enable = true;
 
