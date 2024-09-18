@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ghostty.url = "github:clo4/ghostty-hm-module";
-    superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.4.3.tar.gz";
+    superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.5.0.tar.gz";
     ziggy.url = "github:kristoff-it/ziggy";
   };
 
