@@ -10,7 +10,6 @@
     freeze-flake.url = "github:charmbracelet/freeze/fc03c0d7dda8eb742c0f64b4174e9d9720d50bf0";
     action-table.url = "github:ethanholz/action-table";
     zig.url = "github:mitchellh/zig-overlay";
-    git-ce.url = "https://flakehub.com/f/ethanholz/git-ce/*.tar.gz";
     zls-flake = {
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,12 +40,12 @@
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.just pkgs.jq ];
+          buildInputs = [pkgs.just pkgs.jq];
         };
       };
     };
   nixConfig = {
-    extra-substituters = ["https://git-ce.cachix.org" "https://action-table.cachix.org"];
-    extra-trusted-public-keys = ["git-ce.cachix.org-1:U+Gm5iuIbU4Q/RKIlK1eCB5HPXH5eqDTlp4tbOjG30M=" "action-table.cachix.org-1:IbI8XIJqLPAuAPS4c9X86ZJ0vgwwJpZHXO38IbknRAQ="];
+    extra-substituters = ["https://action-table.cachix.org"];
+    extra-trusted-public-keys = ["action-table.cachix.org-1:IbI8XIJqLPAuAPS4c9X86ZJ0vgwwJpZHXO38IbknRAQ="];
   };
 }

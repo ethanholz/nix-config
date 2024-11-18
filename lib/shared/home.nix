@@ -7,13 +7,38 @@
   inherit (pkgs) system;
   freeze = inputs.freeze-flake.packages.${system}.default;
   action-table = inputs.action-table.packages.${system}.default;
-  gitce = inputs.git-ce.packages.${system}.default;
+  # gitce = inputs.git-ce.packages.${system}.default;
+  gitce-url =
+    if pkgs.stdenv.isDarwin
+    then "https://github.com/ethanholz/git-ce/releases/download/v0.3.6/git-ce-universal2-apple-darwin"
+    else "https://github.com/ethanholz/git-ce/releases/download/v0.3.6/git-ce-x86_64-unknown-linux-musl";
+  gitce-hash =
+    if pkgs.stdenv.isDarwin
+    then "170vgjswcgm59mpp69yzi2whbpp1mhbmvn479ihprqhf7gwyzq76"
+    else "1dx0vbv82iyms2pabjnj7iv79ssxarfmsv3njxv8absx1vm7ywpj";
+  gitce = pkgs.stdenvNoCC.mkDerivation {
+    name = "git-ce";
+    version = "v0.3.6";
+    src = pkgs.fetchurl {
+      url = gitce-url;
+      sha256 = gitce-hash;
+    };
+    dontUnpack = true;
+    installPhase = ''
+      mkdir -p $out/bin
+      cp $src $out/bin/git-ce
+      chmod +x $out/bin/git-ce
+    '';
+  };
   zig = inputs.zig.packages.${system}."0.13.0";
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
     else "/home/${userName}";
-  font-size = if pkgs.stdenv.isDarwin then 16 else 14;
+  font-size =
+    if pkgs.stdenv.isDarwin
+    then 16
+    else 14;
   zellij-rose-pine = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
@@ -128,6 +153,11 @@ in {
     pkgs.libwebp
     pkgs.yt-dlp
     pkgs.vhs
+    pkgs.cmake
+    pkgs.fastfetch
+    pkgs.minisign
+    pkgs.typst
+    pkgs.turso-cli
   ];
   fonts.fontconfig.enable = true;
 
@@ -440,7 +470,7 @@ in {
   };
   programs.eza = {
     enable = true;
-    icons = true;
+    icons = "auto";
   };
 
   programs.gh = {
@@ -455,13 +485,17 @@ in {
     enable = true;
     shellIntegration.enable = true;
     settings = {
-        inherit font-size;
+      inherit font-size;
       font-family = "GeistMono Nerd Font";
       font-style = "Regular";
       theme = "rose-pine-moon";
       command = "${pkgs.fish}/bin/fish";
       font-thicken = true;
       quit-after-last-window-closed = true;
+    };
+    keybindings = {
+      "super+left" = "goto_split:left";
+      "super+right" = "goto_split:right";
     };
   };
 }
