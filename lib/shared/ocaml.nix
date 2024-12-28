@@ -1,5 +1,5 @@
 {pkgs, ...}: {
   home.packages = [
-    pkgs.opam
+    # pkgs.opam
   ];
 }

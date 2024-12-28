@@ -20,5 +20,6 @@ in {
     zls
     superhtml
     ziggy
+    pkgs.astro-language-server
   ];
 }

@@ -64,4 +64,15 @@
   zellij-session-delete = ''
     zellij ls -s | fzf | xargs -o zellij d
   '';
+  jump = ''
+    set current = (pwd)
+    set change (zoxide query --interactive -- $argv[1])
+    if test $status -ne 0
+        return
+    end
+    cd $change
+  '';
+  aws-login = ''
+    aws sso login --sso-session $argv[1]
+  '';
 }

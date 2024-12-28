@@ -143,7 +143,6 @@ in {
     pkgs.croc
     pkgs.pipx
     pkgs.glow
-    pkgs.awscli
     pkgs.iperf3
     pkgs.mr
     pkgs.fio
@@ -158,6 +157,11 @@ in {
     pkgs.minisign
     pkgs.typst
     pkgs.turso-cli
+    pkgs.gleam
+    pkgs.rebar3
+    pkgs.scorecard
+    pkgs.websocat
+    pkgs.duckdb
   ];
   fonts.fontconfig.enable = true;
 
@@ -346,6 +350,9 @@ in {
       battery = {
         disabled = true;
       };
+      aws = {
+        disabled = true;
+      };
     };
   };
 
@@ -406,6 +413,7 @@ in {
        set -x GPG_TTY (tty)
        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
        gpgconf --launch gpg-agent
+       eval "$(micromamba shell hook --shell fish)"
       # gpg-connect-agent updatestartuptty /bye >/dev/null
       # source ~/.config/op/plugins.sh
     '';
@@ -479,6 +487,10 @@ in {
       editor = "nvim";
       protocol = "ssh";
     };
+  };
+  programs.yazi = {
+    enable = true;
+    enableFishIntegration = true;
   };
 
   programs.ghostty = {
