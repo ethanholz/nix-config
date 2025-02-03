@@ -34,29 +34,29 @@ jobs:
       - name: Build Standalone Home-Manager Install
         run: nix develop -c just build-home-manager
 
-  # build-macos:
-  #   name: Buid macOS HM
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Checkout sources
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Login to Tailscale
-  #       uses: tailscale/github-action@v3
-  #       with:
-  #         oauth-client-id: ${{ secrets.TS_CLIENT_ID }}
-  #         oauth-secret: ${{ secrets.TS_CLIENT_SECRET }}
-  #         tags: tag:github-actions
-  #
-  #     - name: Install nix
-  #       uses: DeterminateSystems/nix-installer-action@main
-  #
-  #     - name: Setup Attic cache
-  #       uses: ryanccn/attic-action@v0
-  #       with:
-  #         endpoint: ${{ secrets.ATTIC_ENDPOINT }}
-  #         cache: ${{ secrets.ATTIC_CACHE }}
-  #         token: ${{ secrets.ATTIC_TOKEN }}
-  #
-  #     - name: Build Darwin Install
-  #       run: nix develop -c just build-darwin
+  build-macos:
+    name: Buid macOS HM
+    runs-on: macos-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Login to Tailscale
+        uses: borchero/github-action@no-download
+        with:
+          oauth-client-id: ${{ secrets.TS_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_CLIENT_SECRET }}
+          tags: tag:github-actions
+
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+
+      - name: Build Darwin Install
+        run: nix develop -c just build-darwin
