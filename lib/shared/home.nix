@@ -10,12 +10,12 @@
   # gitce = inputs.git-ce.packages.${system}.default;
   gitce-url =
     if pkgs.stdenv.isDarwin
-    then "https://github.com/ethanholz/git-ce/releases/download/v0.3.6/git-ce-universal2-apple-darwin"
-    else "https://github.com/ethanholz/git-ce/releases/download/v0.3.6/git-ce-x86_64-unknown-linux-musl";
+    then "https://github.com/ethanholz/git-ce/releases/download/v0.4.1/git-ce-universal2-apple-darwin-0.4.1"
+    else "https://github.com/ethanholz/git-ce/releases/download/v0.4.1/git-ce-x86_64-unknown-linux-musl-0.4.1";
   gitce-hash =
     if pkgs.stdenv.isDarwin
-    then "170vgjswcgm59mpp69yzi2whbpp1mhbmvn479ihprqhf7gwyzq76"
-    else "1dx0vbv82iyms2pabjnj7iv79ssxarfmsv3njxv8absx1vm7ywpj";
+    then "1q21jyj09ban3ll23gisq69c6fs5n0p3q91ilnnxxhx4bvaip5sl"
+    else "14gnxdc0c2jv6r84mlqxg84l8074i7i64a1ar8rk50pqfcmlvb42";
   gitce = pkgs.stdenvNoCC.mkDerivation {
     name = "git-ce";
     version = "v0.3.6";
@@ -37,8 +37,8 @@
     else "/home/${userName}";
   font-size =
     if pkgs.stdenv.isDarwin
-    then 16
-    else 14;
+    then "16"
+    else "14";
   zellij-rose-pine = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
     sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
@@ -113,7 +113,8 @@ in {
     pkgs.google-cloud-sdk
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
-    pkgs.nodejs_20
+    # pkgs.nodejs_20
+    pkgs.nodejs_22
     pkgs.yq-go
     pkgs.elixir
     pkgs.ranger
@@ -162,6 +163,9 @@ in {
     pkgs.scorecard
     pkgs.websocat
     pkgs.duckdb
+    pkgs.nom
+    pkgs.hugo
+    pkgs.attic-client
   ];
   fonts.fontconfig.enable = true;
 
@@ -187,6 +191,20 @@ in {
           "enable_build_on_save": true,
           "build_on_save_step": "check"
       }
+    '';
+    ".config/ghostty/config".text = ''
+        font-size = ${font-size}
+        font-family = GeistMono Nerd Font
+        font-style = Regular
+        theme = rose-pine-moon
+        font-thicken = true
+        quit-after-last-window-closed = true
+        shell-integration-features = no-cursor
+        shell-integration = fish
+        cursor-style = block
+        command = ${pkgs.fish}/bin/fish
+        auto-update-channel = stable
+        auto-update = download
     '';
   };
 
@@ -318,13 +336,14 @@ in {
       init.defaultBranch = "main";
       rebase.autoStash = true;
       push.autoSetupRemote = true;
-      core.editor = "nvim";
+      # core.editor = "nvim";
     };
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       character = {
         success_symbol = "[❯](purple)";
@@ -409,13 +428,24 @@ in {
       set fish_greeting
       set EDITOR nvim
       set SUDO_EDITOR nvim
+        if set -q ZED_TERM && test $ZED_TERM = "true"
+          set fish_greeting "Welcome to the Zed Terminal"
+          set EDITOR zed --wait
+        end
 
        set -x GPG_TTY (tty)
        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
        gpgconf --launch gpg-agent
        eval "$(micromamba shell hook --shell fish)"
+      set fish_cursor_default block
       # gpg-connect-agent updatestartuptty /bye >/dev/null
       # source ~/.config/op/plugins.sh
+      if set -q GHOSTTY_RESOURCES_DIR
+        source "$GHOSTTY_RESOURCES_DIR"/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish
+      end
+    '';
+    shellInitLast = ''
+        set fish_cursor_default block
     '';
   };
   programs.zsh = {
@@ -493,21 +523,23 @@ in {
     enableFishIntegration = true;
   };
 
-  programs.ghostty = {
-    enable = true;
-    shellIntegration.enable = true;
-    settings = {
-      inherit font-size;
-      font-family = "GeistMono Nerd Font";
-      font-style = "Regular";
-      theme = "rose-pine-moon";
-      command = "${pkgs.fish}/bin/fish";
-      font-thicken = true;
-      quit-after-last-window-closed = true;
-    };
-    keybindings = {
-      "super+left" = "goto_split:left";
-      "super+right" = "goto_split:right";
-    };
-  };
+  # programs.ghostty = {
+  #   enable = true;
+  #   shellIntegration.enable = false;
+  #   settings = {
+  #     inherit font-size;
+  #     font-family = "GeistMono Nerd Font";
+  #     font-style = "Regular";
+  #     theme = "rose-pine-moon";
+  #     command = "${pkgs.fish}/bin/fish";
+  #     font-thicken = true;
+  #     quit-after-last-window-closed = true;
+  #     # shell-integration-features = "no-cursor";
+  #     cursor-style = "block";
+  #   };
+  #   keybindings = {
+  #     "super+left" = "goto_split:left";
+  #     "super+right" = "goto_split:right";
+  #   };
+  # };
 }

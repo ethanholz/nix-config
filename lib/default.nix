@@ -57,7 +57,7 @@ in {
           home-manager.useUserPackages = true;
           home-manager.users.${userName} = {pkgs, ...}: {
             imports = [
-              inputs.ghostty.homeModules.default
+              # inputs.ghostty.homeModules.default
               (import ./shared/home.nix {inherit inputs pkgs userName;})
               (import ./shared/lsp.nix {inherit inputs pkgs;})
               (import ./shared/python.nix {inherit inputs pkgs;})
