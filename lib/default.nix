@@ -8,7 +8,7 @@ in {
         inherit system;
         config.allowUnfree = true;
       };
-      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix inputs.ghostty.homeModules.default ./shared/nix.nix];
+      modules = [./shared/home.nix ./shared/lsp.nix ./shared/ocaml.nix ./shared/python.nix ./shared/nix.nix];
       # modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
       extraSpecialArgs = {inherit inputs userName;};
     };
