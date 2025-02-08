@@ -18,6 +18,13 @@ jobs:
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+
       - name: Build Standalone Home-Manager Install
         run: nix develop -c just build-home-manager
 
@@ -30,6 +37,13 @@ jobs:
 
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
 
       - name: Build Darwin Install
         run: nix develop -c just build-darwin
