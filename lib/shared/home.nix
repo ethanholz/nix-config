@@ -516,6 +516,9 @@ in {
     settings = {
       editor = "nvim";
       protocol = "ssh";
+      aliases = {
+        "b" = "browse";
+      };
     };
   };
   programs.yazi = {
