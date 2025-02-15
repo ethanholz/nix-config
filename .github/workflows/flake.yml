@@ -8,9 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-standalone:
-    name: Buid Standalone HM
-    runs-on: ubuntu-latest
+  build: 
+    strategy:
+      matrix: 
+        os: ["ubuntu-latest", "macos-latest", "ubuntu-24.04-arm"]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -26,24 +28,13 @@ jobs:
           token: ${{ secrets.ATTIC_TOKEN }}
 
       - name: Build Standalone Home-Manager Install
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: nix develop -c just build-home-manager
 
-  build-macos:
-    name: Buid macOS HM
-    runs-on: macos-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
+      - name: Build HM ARM
+        if: ${{ matrix.os == 'ubuntu-24.04-arm'}}
+        run: nix develop -c just build-home-manager-arm
 
-      - name: Install nix
-        uses: DeterminateSystems/nix-installer-action@main
-
-      - name: Setup Attic cache
-        uses: ryanccn/attic-action@v0
-        with:
-          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
-          cache: ${{ secrets.ATTIC_CACHE }}
-          token: ${{ secrets.ATTIC_TOKEN }}
-
-      - name: Build Darwin Install
-        run: nix develop -c just build-darwin
+      - name: Build Darwin
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: nix develop-c just build-darwin

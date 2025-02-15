@@ -13,6 +13,8 @@ build profile:
     | jq -r ".[0].outputs.out"
 build-home-manager name="ethan":
     just build ".#homeConfigurations.{{name}}.activationPackage"
+build-home-manager-arm name="ethan-aarch64":
+    just build ".#homeConfigurations.{{name}}.activationPackage"
 build-darwin name="Ethans-Laptop":
     just build ".#darwinConfigurations.{{name}}.config.system.build.toplevel"
 

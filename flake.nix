@@ -32,11 +32,12 @@
         lib = import ./lib {inherit inputs;};
         darwinConfigurations."Ethans-Laptop" = mkDarwin {system = "aarch64-darwin";};
         homeConfigurations."ethan" = mkStandalone {system = "x86_64-linux";};
+        homeConfigurations."ethan-aarch64" = mkStandalone { system = "aarch64-linux";};
         # This is for using in GH Actions
         homeConfigurations."runner" = mkStandalone {system = "x86_64-linux";};
       };
 
-      systems = ["aarch64-darwin" "x86_64-linux"];
+      systems = ["aarch64-darwin" "x86_64-linux" "aarch64-linux"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
