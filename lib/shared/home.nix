@@ -166,6 +166,7 @@ in {
     pkgs.nom
     pkgs.hugo
     pkgs.attic-client
+    pkgs.sqlc
   ];
   fonts.fontconfig.enable = true;
 
