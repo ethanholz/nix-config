@@ -167,6 +167,7 @@ in {
     pkgs.hugo
     pkgs.attic-client
     pkgs.sqlc
+    pkgs.tflint
   ];
   fonts.fontconfig.enable = true;
 
@@ -444,6 +445,7 @@ in {
       if set -q GHOSTTY_RESOURCES_DIR
         source "$GHOSTTY_RESOURCES_DIR"/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish
       end
+      fish_vi_key_bindings
     '';
     shellInitLast = ''
         set fish_cursor_default block
