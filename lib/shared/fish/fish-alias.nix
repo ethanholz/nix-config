@@ -3,4 +3,5 @@
   zlist = "zellij-list";
   zd = "zellij-session-delete";
   j = "jump";
+  rc = "repomix --copy";
 }

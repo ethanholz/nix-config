@@ -168,6 +168,8 @@ in {
     pkgs.attic-client
     pkgs.sqlc
     pkgs.tflint
+    pkgs.syft
+    pkgs.repomix
   ];
   fonts.fontconfig.enable = true;
 
@@ -195,18 +197,18 @@ in {
       }
     '';
     ".config/ghostty/config".text = ''
-        font-size = ${font-size}
-        font-family = GeistMono Nerd Font
-        font-style = Regular
-        theme = rose-pine-moon
-        font-thicken = true
-        quit-after-last-window-closed = true
-        shell-integration-features = no-cursor
-        shell-integration = fish
-        cursor-style = block
-        command = ${pkgs.fish}/bin/fish
-        auto-update-channel = stable
-        auto-update = download
+      font-size = ${font-size}
+      font-family = GeistMono Nerd Font
+      font-style = Regular
+      theme = rose-pine-moon
+      font-thicken = true
+      quit-after-last-window-closed = true
+      shell-integration-features = no-cursor
+      shell-integration = fish
+      cursor-style = block
+      command = ${pkgs.fish}/bin/fish
+      auto-update-channel = stable
+      auto-update = download
     '';
   };
 
@@ -423,7 +425,7 @@ in {
   programs.fish = {
     enable = true;
     package = pkgs.fish;
-    functions = import fish/fish-functions.nix;
+    functions = import fish/fish-functions.nix {inherit pkgs;};
     shellAliases = import fish/fish-alias.nix;
     # interactiveShellInit = "set fish_greeting";
     interactiveShellInit = ''
@@ -448,7 +450,7 @@ in {
       fish_vi_key_bindings
     '';
     shellInitLast = ''
-        set fish_cursor_default block
+      set fish_cursor_default block
     '';
   };
   programs.zsh = {

@@ -1,11 +1,16 @@
-{
-  copy = ''
-    if test $WAYLAND_DISPLAY
-        $argv | wl-copy
-    else
-        $argv | xclip -sel c
-    end
-  '';
+{pkgs}: {
+  copy =
+    if pkgs.stdenv.isDarwin
+    then ''
+      $argv | pbcopy
+    ''
+    else ''
+      if test $WAYLAND_DISPLAY
+          $argv | wl-copy
+      else
+          $argv | xclip -sel c
+      end
+    '';
   copycat = ''
     set filename $argv[1]
     if not test -f $filename
@@ -14,6 +19,7 @@
     end
     copy cat $filename
   '';
+
   new-session = ''
     zoxide query --interactive -- $argv[1]
     if test $status -ne 0
