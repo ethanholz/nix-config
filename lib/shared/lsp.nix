@@ -4,7 +4,6 @@
   ...
 }: let
   system = pkgs.system;
-  zls = inputs.zls-flake.packages.${system}.default;
   superhtml = inputs.superhtml.packages.${system}.default;
   # ziggy = inputs.ziggy.packages.${system}.default;
 in {
@@ -17,7 +16,7 @@ in {
     # pkgs.ansible-lint
     pkgs.stylua
     pkgs.terraform-ls
-    zls
+    pkgs.zls
     superhtml
     # ziggy
     pkgs.astro-language-server
