@@ -313,6 +313,7 @@ in {
       "commit_convention.yml"
       ".direnv/"
       ".envrc"
+      "repomix-output.txt"
     ];
     # delta = {
     #   enable = true;
@@ -525,6 +526,7 @@ in {
         "b" = "browse";
       };
     };
+    extensions = [pkgs.gh-dash];
   };
   programs.yazi = {
     enable = true;
