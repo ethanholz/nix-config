@@ -20,6 +20,12 @@
     copy cat $filename
   '';
 
+  copycatfuzz = ''
+    set selection (fzf)
+    copycat $selection
+    set -e selection
+  '';
+
   new-session = ''
     zoxide query --interactive -- $argv[1]
     if test $status -ne 0

@@ -170,6 +170,7 @@ in {
     pkgs.tflint
     pkgs.syft
     pkgs.repomix
+    pkgs.azure-storage-azcopy
   ];
   fonts.fontconfig.enable = true;
 
@@ -315,9 +316,6 @@ in {
       ".envrc"
       "repomix-output.txt"
     ];
-    # delta = {
-    #   enable = true;
-    # };
     includes = [
       {
         condition = "gitdir:${base}/Documents/code/work/**/*";
@@ -332,6 +330,10 @@ in {
         path = "${base}/Documents/code/work/.gitconfig-work";
       }
     ];
+    aliases = {
+        co = "checkout";
+        a = "add";
+    };
     extraConfig = {
       # url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
       # url."git@github.com:".insteadOf = "https://github.com/";

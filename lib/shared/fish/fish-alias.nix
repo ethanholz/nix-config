@@ -4,4 +4,5 @@
   zd = "zellij-session-delete";
   j = "jump";
   rc = "repomix --copy";
+  ccf = "copycatfuzz";
 }
