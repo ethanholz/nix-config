@@ -486,7 +486,7 @@ in {
       # SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
       # SSH_AUTH_SOCK = "/run/user/$UID/gnupg/S.gpg-agent.ssh";
     };
-    initExtra = ''
+    initContent = ''
       # gpg-connect-agent updatestartuptty /bye >/dev/null
       source $HOME/.zsh/plugins/zsh-functions/zsh-functions.zsh
       export GPG_TTY=$(tty)
