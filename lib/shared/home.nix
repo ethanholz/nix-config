@@ -379,6 +379,9 @@ in {
       aws = {
         disabled = true;
       };
+      pixi = {
+        disabled = true;
+      };
     };
   };
 
