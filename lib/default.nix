@@ -23,6 +23,16 @@ in {
           nix.enable = true;
 
           nixpkgs.config.allowUnfree = true;
+          nix.gc = {
+            automatic = true;
+            interval = [
+                {
+                    Hour = 8;
+                    Minute = 0;
+                    Weekday = 1;
+                }
+            ];
+          };
 
           # Necessary for using flakes on this system.
           # nix.settings.experimental-features = "nix-command flakes";
