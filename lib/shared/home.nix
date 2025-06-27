@@ -7,29 +7,7 @@
   inherit (pkgs) system;
   freeze = inputs.freeze-flake.packages.${system}.default;
   action-table = inputs.action-table.packages.${system}.default;
-  # gitce = inputs.git-ce.packages.${system}.default;
-  gitce-url =
-    if pkgs.stdenv.isDarwin
-    then "https://github.com/ethanholz/git-ce/releases/download/v0.4.1/git-ce-universal2-apple-darwin-0.4.1"
-    else "https://github.com/ethanholz/git-ce/releases/download/v0.4.1/git-ce-x86_64-unknown-linux-musl-0.4.1";
-  gitce-hash =
-    if pkgs.stdenv.isDarwin
-    then "1q21jyj09ban3ll23gisq69c6fs5n0p3q91ilnnxxhx4bvaip5sl"
-    else "14gnxdc0c2jv6r84mlqxg84l8074i7i64a1ar8rk50pqfcmlvb42";
-  gitce = pkgs.stdenvNoCC.mkDerivation {
-    name = "git-ce";
-    version = "v0.3.6";
-    src = pkgs.fetchurl {
-      url = gitce-url;
-      sha256 = gitce-hash;
-    };
-    dontUnpack = true;
-    installPhase = ''
-      mkdir -p $out/bin
-      cp $src $out/bin/git-ce
-      chmod +x $out/bin/git-ce
-    '';
-  };
+  gitce = inputs.git-ce.packages.${system}.default;
   zig = inputs.zig.packages.${system}."0.13.0";
   base =
     if pkgs.stdenv.isDarwin
@@ -57,6 +35,7 @@ in {
     "$HOME/.bun/bin"
     "/opt/homebrew/bin"
     "$GHOSTTY_BIN_DIR"
+    "/opt/homebrew/opt/node@22/bin"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -76,6 +55,7 @@ in {
     gitce
     zig
     action-table
+    # opnix-cli
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -114,7 +94,6 @@ in {
     pkgs.nodePackages.typescript
     pkgs.rust-analyzer
     # pkgs.nodejs_20
-    pkgs.nodejs_22
     pkgs.yq-go
     pkgs.elixir
     pkgs.ranger
@@ -235,6 +214,7 @@ in {
     enable = true;
   };
 
+
   programs.gitui = {
     enable = true;
     keyConfig = ''
@@ -314,6 +294,7 @@ in {
       "commit_convention.yml"
       ".direnv/"
       ".envrc"
+      ".oprc"
       "repomix-output.txt"
     ];
     includes = [
@@ -452,6 +433,9 @@ in {
       # source ~/.config/op/plugins.sh
       if set -q GHOSTTY_RESOURCES_DIR
         source "$GHOSTTY_RESOURCES_DIR"/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish
+      end
+      if test -e /Users/ethan/.deno/env.fish
+        source /Users/ethan/.deno/env.fish
       end
       fish_vi_key_bindings
     '';

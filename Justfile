@@ -3,7 +3,7 @@ update:
 switch-ha:
     home-manager switch --flake .
 switch-darwin:
-   darwin-rebuild switch --flake .
+   sudo darwin-rebuild switch --flake .
 fmt:
     nix fmt
 prefetch url:
