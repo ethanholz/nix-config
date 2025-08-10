@@ -4,23 +4,19 @@
   userName,
   ...
 }: let
-  inherit (pkgs) system;
+  inherit (pkgs) system lib;
   freeze = inputs.freeze-flake.packages.${system}.default;
-  action-table = inputs.action-table.packages.${system}.default;
   gitce = inputs.git-ce.packages.${system}.default;
-  zig = inputs.zig.packages.${system}."0.13.0";
+  zig = inputs.zig.packages.${system}."0.14.0";
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
     else "/home/${userName}";
   font-size =
     if pkgs.stdenv.isDarwin
-    then "16"
+    then "15"
     else "14";
-  zellij-rose-pine = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/rose-pine/zellij/main/dist/rose-pine.kdl";
-    sha256 = "18885c1x9zmjpxahmhffbnf7nf47jxq9baz0a8q6w3iwc088vjds";
-  };
+
 in {
   home.username = userName;
   home.homeDirectory = base;
@@ -33,9 +29,10 @@ in {
     "$HOME/.cache/rebar3/bin"
     "$HOME/.pixi/bin"
     "$HOME/.bun/bin"
-    "/opt/homebrew/bin"
     "$GHOSTTY_BIN_DIR"
+  ] ++ lib.optionals pkgs.stdenv.isDarwin [
     "/opt/homebrew/opt/node@22/bin"
+    "/opt/homebrew/bin"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -54,11 +51,6 @@ in {
     freeze
     gitce
     zig
-    action-table
-    # opnix-cli
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -77,44 +69,27 @@ in {
     pkgs.govulncheck
     pkgs.revive
     pkgs.fzf
-    pkgs.android-tools
-    pkgs.scrcpy
     pkgs.ripgrep
     pkgs.age
     pkgs.sops
     pkgs.golangci-lint
     pkgs.gitleaks
-    pkgs.natscli
     # Git
     pkgs.bfg-repo-cleaner
-    pkgs.minicom
     pkgs.just
     pkgs.git-cliff
-    pkgs.google-cloud-sdk
     pkgs.nodePackages.typescript
-    pkgs.rust-analyzer
-    # pkgs.nodejs_20
     pkgs.yq-go
     pkgs.elixir
-    pkgs.ranger
     pkgs.goreleaser
-    pkgs.nfpm
-    pkgs.wasmtime
-    pkgs.wabt
-    pkgs.wazero
-    pkgs.rust-analyzer
     pkgs.yubikey-manager
     pkgs.helix
     pkgs.tailwindcss
-    pkgs.ttyd
     pkgs.act
-    # pkgs.extism-cli
     pkgs.neovim
-    pkgs.fermyon-spin
     pkgs.htop
     pkgs.btop
     pkgs.stow
-    pkgs.wally-cli
     pkgs.ffmpeg
     pkgs.actionlint
     pkgs.jupyter
@@ -124,8 +99,6 @@ in {
     pkgs.pipx
     pkgs.glow
     pkgs.iperf3
-    pkgs.mr
-    pkgs.fio
     pkgs.commit-mono
     pkgs.geist-font
     pkgs.flyctl
@@ -133,16 +106,12 @@ in {
     pkgs.yt-dlp
     pkgs.vhs
     pkgs.cmake
-    pkgs.fastfetch
     pkgs.minisign
     pkgs.typst
     pkgs.turso-cli
-    pkgs.gleam
-    pkgs.rebar3
     pkgs.scorecard
     pkgs.websocat
     pkgs.duckdb
-    pkgs.nom
     pkgs.hugo
     pkgs.attic-client
     pkgs.sqlc
@@ -156,19 +125,6 @@ in {
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/zellij/themes/rose-pine.kdl".source = zellij-rose-pine;
-    ".config/alacritty/alacritty.toml".text = ''
-      import = [ "~/.config/alacritty/terafox.toml" ]
-      [font]
-      size = 14.0
-      [font.normal]
-      family = "GeistMono Nerd Font"
-      [shell]
-      # program = "${pkgs.zsh}/bin/zsh"
-      program = "${pkgs.fish}/bin/fish"
-      [window]
-      opacity = 0.90
-    '';
     ".zsh/plugins/zsh-functions/zsh-functions.zsh".source = ./zsh/zsh-functions.zsh;
     ".config/zls.json".text = ''
       {
@@ -180,15 +136,17 @@ in {
       font-size = ${font-size}
       font-family = GeistMono Nerd Font
       font-style = Regular
-      theme = rose-pine-moon
+      theme = carbonfox
       font-thicken = true
       quit-after-last-window-closed = true
-      shell-integration-features = no-cursor
+      shell-integration-features = no-cursor,ssh-env,ssh-terminfo
       shell-integration = fish
       cursor-style = block
       command = ${pkgs.fish}/bin/fish
-      auto-update-channel = stable
+      auto-update-channel = tip
       auto-update = download
+      keybind = shift+enter=text:\n
+      macos-icon = retro
     '';
   };
 
@@ -516,10 +474,6 @@ in {
       };
     };
     extensions = [pkgs.gh-dash];
-  };
-  programs.yazi = {
-    enable = true;
-    enableFishIntegration = true;
   };
 
   # programs.ghostty = {

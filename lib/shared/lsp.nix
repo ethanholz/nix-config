@@ -20,5 +20,9 @@ in {
     superhtml
     # ziggy
     pkgs.astro-language-server
+    pkgs.svelte-language-server
+    pkgs.typescript-language-server
+    pkgs.just-lsp
+    pkgs.yaml-language-server
   ];
 }
