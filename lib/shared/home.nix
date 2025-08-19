@@ -84,7 +84,6 @@ in {
     pkgs.elixir
     pkgs.goreleaser
     pkgs.yubikey-manager
-    pkgs.helix
     pkgs.tailwindcss
     pkgs.act
     pkgs.neovim
@@ -499,6 +498,13 @@ in {
       };
     };
     extensions = [pkgs.gh-dash];
+  };
+
+  programs.helix = {
+    enable = true;
+    settings = {
+        theme = "carbonfox";
+    };
   };
 
   # programs.ghostty = {
