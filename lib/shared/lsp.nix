@@ -24,5 +24,6 @@ in {
     pkgs.typescript-language-server
     pkgs.just-lsp
     pkgs.yaml-language-server
+    pkgs.harper
   ];
 }
