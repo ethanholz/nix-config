@@ -507,23 +507,4 @@ in {
     };
   };
 
-  # programs.ghostty = {
-  #   enable = true;
-  #   shellIntegration.enable = false;
-  #   settings = {
-  #     inherit font-size;
-  #     font-family = "GeistMono Nerd Font";
-  #     font-style = "Regular";
-  #     theme = "rose-pine-moon";
-  #     command = "${pkgs.fish}/bin/fish";
-  #     font-thicken = true;
-  #     quit-after-last-window-closed = true;
-  #     # shell-integration-features = "no-cursor";
-  #     cursor-style = "block";
-  #   };
-  #   keybindings = {
-  #     "super+left" = "goto_split:left";
-  #     "super+right" = "goto_split:right";
-  #   };
-  # };
 }
