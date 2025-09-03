@@ -23,7 +23,7 @@ build:
     {{ build }}
 
 build-system profile:
-    nix build --json --no-link --print-build-logs --accept-flake-config "{{ profile }}" \
+    @nix build --json --no-link --print-build-logs --accept-flake-config "{{ profile }}" \
     | jq -r ".[0].outputs.out"
 
 build-home-manager name="ethan":
@@ -33,4 +33,4 @@ build-home-manager-arm name="ethan-aarch64":
     just build-system ".#homeConfigurations.{{ name }}.activationPackage"
 
 build-darwin name="Ethans-Laptop":
-    just build-system ".#darwinConfigurations.{{ name }}.config.system.build.toplevel"
+    @just build-system ".#darwinConfigurations.{{ name }}.config.system.build.toplevel"
