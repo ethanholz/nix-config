@@ -119,6 +119,7 @@ in {
     pkgs.syft
     pkgs.repomix
     pkgs.azure-storage-azcopy
+    pkgs.lychee
   ];
   fonts.fontconfig.enable = true;
 
