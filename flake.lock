@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "carbonfox": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-+eFqCHaoGwsprtXt4hX8qLDTXvMDJO2kTjkjS4RxPIU=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -375,6 +387,7 @@
     },
     "root": {
       "inputs": {
+        "carbonfox": "carbonfox",
         "flake-parts": "flake-parts",
         "freeze-flake": "freeze-flake",
         "git-ce": "git-ce",

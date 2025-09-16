@@ -13,11 +13,13 @@
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # ghostty.url = "github:clo4/ghostty-hm-module";
     superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.5.0.tar.gz";
     ziggy.url = "github:kristoff-it/ziggy";
     git-ce.url = "github:ethanholz/git-ce";
-    # TODO: Waiting on https://github.com/brizzbuzz/opnix/pull/16 so we can actually use on nix-darwin
+    carbonfox = {
+        url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty";
+        flake = false;
+    };
   };
 
   outputs = inputs @ {

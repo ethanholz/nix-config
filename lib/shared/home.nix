@@ -16,6 +16,7 @@
     if pkgs.stdenv.isDarwin
     then "15"
     else "14";
+  carbonfox = inputs.carbonfox;
 
 in {
   home.username = userName;
@@ -149,6 +150,7 @@ in {
       keybind = shift+enter=text:\n
       macos-icon = retro
     '';
+    ".config/ghostty/themes/carbonfox".source = carbonfox;
   };
 
   # You can also manage environment variables but you will have to manually

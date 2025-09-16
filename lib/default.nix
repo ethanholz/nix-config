@@ -17,42 +17,14 @@ in {
       inherit system;
       modules = [
         {
-          # environment.systemPackages =
-          #   [
-          #   ];
-          nix.enable = true;
+          # Manage using determinate Nix instead
+          nix.enable = false;
 
           nixpkgs.config.allowUnfree = true;
-          nix.gc = {
-            automatic = true;
-            interval = [
-                {
-                    Hour = 8;
-                    Minute = 0;
-                    Weekday = 1;
-                }
-            ];
-          };
-
-          # Necessary for using flakes on this system.
-          # nix.settings.experimental-features = "nix-command flakes";
-          nix.settings = {
-            experimental-features = "nix-command flakes";
-            trusted-users = ["root" "${userName}"];
-            trusted-substituters = ["https://cache.nixos.org" "https://git-ce.cachix.org"];
-            trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" "git-ce.cachix.org-1:U+Gm5iuIbU4Q/RKIlK1eCB5HPXH5eqDTlp4tbOjG30M="];
-          };
 
           # Create /etc/zshrc that loads the nix-darwin environment.
           programs.zsh.enable = true; # default shell on catalina
           programs.fish.enable = true;
-          # programs.fish.enable = true;
-
-          # Set Git commit hash for darwin-version.
-          # system.configurationRevision = self.rev or self.dirtyRev or null;
-
-          # Used for backwards compatibility, please read the changelog before changing.
-          # $ darwin-rebuild changelog
           system.stateVersion = 4;
 
           # The platform the configuration will be used on.
@@ -73,9 +45,6 @@ in {
               (import ./shared/nix.nix {inherit inputs pkgs;})
             ];
           };
-          # home-manager.extraSpecialArgs = {inherit gitce freeze zls pkgs userName;};
-          # extraSpecialArgs = {inherit inputs.gitce inputs.grlx inputs.zls inputs.freeze;};
-          # home-manager.sharedModules = [./nix-config/lsp.nix];
         }
       ];
     };
