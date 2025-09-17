@@ -7,7 +7,7 @@
   inherit (pkgs) system lib;
   freeze = inputs.freeze-flake.packages.${system}.default;
   gitce = inputs.git-ce.packages.${system}.default;
-  zig = inputs.zig.packages.${system}."0.14.0";
+  zig = inputs.zig.packages.${system}."0.15.1";
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
