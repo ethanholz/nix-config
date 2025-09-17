@@ -6,7 +6,6 @@
 }: let
   inherit (pkgs) system lib;
   freeze = inputs.freeze-flake.packages.${system}.default;
-  gitce = inputs.git-ce.packages.${system}.default;
   zig = inputs.zig.packages.${system}."0.15.1";
   base =
     if pkgs.stdenv.isDarwin
@@ -17,25 +16,26 @@
     then "15"
     else "14";
   carbonfox = inputs.carbonfox;
-
 in {
   home.username = userName;
   home.homeDirectory = base;
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/go/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/.cache/rebar3/bin"
-    "$HOME/.pixi/bin"
-    "$HOME/.bun/bin"
-    "$GHOSTTY_BIN_DIR"
-  ] ++ lib.optionals pkgs.stdenv.isDarwin [
-    "/opt/homebrew/opt/node@22/bin"
-    "/opt/homebrew/bin"
-    "$HOME/.opencode/bin"
-  ];
+  home.sessionPath =
+    [
+      "$HOME/.local/bin"
+      "$HOME/go/bin"
+      "$HOME/.cargo/bin"
+      "$HOME/.cache/rebar3/bin"
+      "$HOME/.pixi/bin"
+      "$HOME/.bun/bin"
+      "$GHOSTTY_BIN_DIR"
+    ]
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      "/opt/homebrew/opt/node@22/bin"
+      "/opt/homebrew/bin"
+      "$HOME/.opencode/bin"
+    ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
   # This value determines the Home Manager release that your configuration is
@@ -175,7 +175,6 @@ in {
     enable = true;
   };
 
-
   programs.gitui = {
     enable = true;
     keyConfig = ''
@@ -273,8 +272,8 @@ in {
       }
     ];
     aliases = {
-        co = "checkout";
-        a = "add";
+      co = "checkout";
+      a = "add";
     };
     extraConfig = {
       # url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
@@ -326,26 +325,26 @@ in {
       };
       custom = {
         jj = {
-        command = ''
-            jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always  --template '
-  separate(" ",
-    bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-    tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-    surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
-    if(conflict, "conflict"),
-    if(divergent, "divergent"),
-    if(hidden, "hidden"),
-  )
-'
-        '';
-        when = "jj --ignore-working-copy root";
-        symbol = "jj ";
+          command = ''
+                        jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always  --template '
+              separate(" ",
+                bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+                tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+                surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
+                if(conflict, "conflict"),
+                if(divergent, "divergent"),
+                if(hidden, "hidden"),
+              )
+            '
+          '';
+          when = "jj --ignore-working-copy root";
+          symbol = "jj ";
         };
         jjstate = {
-            when = "jj --ignore-working-copy root";
-            command = ''
+          when = "jj --ignore-working-copy root";
+          command = ''
             jj log -r@ -n1 --ignore-working-copy --no-graph -T "" --stat | tail -n1 | sd "(\d+) files? changed, (\d+) insertions?\(\+\), (\d+) deletions?\(-\)" ' \$\{1\}m \$\{2\}+ \$\{3\}-' | sd " 0." ""
-            '';
+          '';
         };
       };
     };
@@ -506,8 +505,7 @@ in {
   programs.helix = {
     enable = true;
     settings = {
-        theme = "carbonfox";
+      theme = "carbonfox";
     };
   };
-
 }

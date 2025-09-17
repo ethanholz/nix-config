@@ -15,22 +15,19 @@
     };
     superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.5.0.tar.gz";
     ziggy.url = "github:kristoff-it/ziggy";
-    git-ce.url = "github:ethanholz/git-ce";
     carbonfox = {
-        url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty";
-        flake = false;
+      url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty";
+      flake = false;
     };
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs @ {
-    self,
-    flake-parts,
-    ...
-  }: let
+  outputs = inputs @ {self, ...}: let
     mkDarwin = self.lib.mkDarwin {};
     mkStandalone = self.lib.mkStandalone {};
   in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
         lib = import ./lib {inherit inputs;};
         darwinConfigurations."Ethans-Laptop" = mkDarwin {system = "aarch64-darwin";};

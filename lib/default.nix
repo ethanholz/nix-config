@@ -30,7 +30,11 @@ in {
           # The platform the configuration will be used on.
           nixpkgs.hostPlatform = "aarch64-darwin";
           users.users.${userName}.home = "/Users/${userName}";
+          determinate-nix.customSettings = {
+            trusted-users = ["root" "${userName}"];
+          };
         }
+        inputs.determinate.darwinModules.default
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
