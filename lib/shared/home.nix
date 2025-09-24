@@ -51,7 +51,6 @@ in {
   # environment.
   home.packages = [
     freeze
-    gitce
     zig
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
