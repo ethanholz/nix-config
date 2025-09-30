@@ -133,23 +133,6 @@ in {
           "build_on_save_step": "check"
       }
     '';
-    ".config/ghostty/config".text = ''
-      font-size = ${font-size}
-      font-family = GeistMono Nerd Font
-      font-style = Regular
-      theme = carbonfox
-      font-thicken = true
-      quit-after-last-window-closed = true
-      shell-integration-features = no-cursor,ssh-env,ssh-terminfo
-      shell-integration = fish
-      cursor-style = block
-      command = ${pkgs.fish}/bin/fish
-      auto-update-channel = tip
-      auto-update = download
-      keybind = shift+enter=text:\n
-      macos-icon = retro
-    '';
-    ".config/ghostty/themes/carbonfox".source = carbonfox;
   };
 
   # You can also manage environment variables but you will have to manually
@@ -163,6 +146,31 @@ in {
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     editor = "nvim";
+  };
+
+  programs.ghostty = {
+    enable = true;
+    # TODO: make this Linux capable in the future
+    package = lib.mkIf pkgs.stdenv.isDarwin null;
+    settings = {
+      font-size = font-size;
+      font-family = "GeistMono Nerd Font";
+      theme = "Carbonfox";
+      font-thicken = true;
+      quit-after-last-window-closed = true;
+      shell-integration-features = "no-cursor,ssh-env,ssh-terminfo";
+      #   shell-integration = fish
+      cursor-style = "block";
+      command = "${pkgs.fish}/bin/fish";
+      auto-update-channel = "tip";
+      auto-update = "download";
+      keybind = [
+        "shift+enter=text:\n"
+      ];
+      macos-icon = "retro";
+    };
+    enableFishIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Let Home Manager install and manage itself.
@@ -349,52 +357,15 @@ in {
     };
   };
 
-  programs.zellij = {
-    enable = false;
-    settings = {
-      copy_command = "wl-copy";
-      default_shell = "fish";
-      theme = "rose-pine";
-      themes = {
-        terafox = {
-          bg = "#152528";
-          fg = "#e6eaea";
-          red = "#e85c51";
-          green = "#7aa4a1";
-          blue = "#5a93aa";
-          yellow = "#fda47f";
-          magenta = "#ad5c7c";
-          orange = "#ff8349";
-          cyan = "#a1cdd8";
-          black = "#254147";
-          white = "#cbd9d8";
-        };
-        modified_carbonfox = {
-          bg = "#b6b8bb";
-          black = "#161616";
-          blue = "#78a9ff";
-          cyan = "#33b1ff";
-          fg = "#f2f4f8";
-          green = "#de3163";
-          magenta = "#be95ff";
-          orange = "#3ddbd9";
-          red = "#ee5396";
-          white = "#b6b8bb";
-          yellow = "#08bdba";
-        };
-      };
-      keybinds.locked = {
-        "bind \"Ctrl p\"" = {SwitchToMode = "Pane";};
-        "bind \"Ctrl h\"" = {MoveFocus = "Left";};
-        "bind \"Ctrl j\"" = {MoveFocus = "Down";};
-        "bind \"Ctrl k\"" = {MoveFocus = "Up";};
-        "bind \"Ctrl l\"" = {MoveFocus = "Right";};
-      };
-    };
-  };
   programs.fish = {
     enable = true;
     package = pkgs.fish;
+    plugins = [
+      {
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
+    ];
     functions = import fish/fish-functions.nix {inherit pkgs;};
     shellAliases = import fish/fish-alias.nix;
     # interactiveShellInit = "set fish_greeting";
@@ -412,11 +383,6 @@ in {
        gpgconf --launch gpg-agent
        eval "$(micromamba shell hook --shell fish)"
       set fish_cursor_default block
-      # gpg-connect-agent updatestartuptty /bye >/dev/null
-      # source ~/.config/op/plugins.sh
-      if set -q GHOSTTY_RESOURCES_DIR
-        source "$GHOSTTY_RESOURCES_DIR"/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish
-      end
       if test -e /Users/ethan/.deno/env.fish
         source /Users/ethan/.deno/env.fish
       end
