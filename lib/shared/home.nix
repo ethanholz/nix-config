@@ -120,6 +120,8 @@ in {
     pkgs.repomix
     pkgs.azure-storage-azcopy
     pkgs.lychee
+    pkgs.vscode-langservers-extracted
+    pkgs.prettierd
   ];
   fonts.fontconfig.enable = true;
 
