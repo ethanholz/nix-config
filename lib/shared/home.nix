@@ -475,4 +475,24 @@ in {
       theme = "carbonfox";
     };
   };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Ethan Holz";
+        email = "ethan.holz@thoriumworks.com";
+      };
+      ui = {
+        paginate = "never";
+      };
+      signing = {
+        behavior = "own";
+        backend = "gpg";
+      };
+      git = {
+        write-change-id-header = true;
+      };
+    };
+  };
 }
