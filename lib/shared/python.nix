@@ -1,10 +1,11 @@
 {pkgs, ...}: {
-  home.packages = [
+  home.packages = with pkgs; [
     # Python
-    pkgs.micromamba
-    pkgs.cookiecutter
-    pkgs.ruff
-    pkgs.pyright
-    pkgs.rye
+    micromamba
+    cookiecutter
+    ruff
+    pyright
+    rye
+    pre-commit
   ];
 }
