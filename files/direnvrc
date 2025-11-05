@@ -1,0 +1,26 @@
+layout_uv() {
+    if [[ -d ".venv" ]]; then
+        VIRTUAL_ENV="$(pwd)/.venv"
+    fi
+
+    if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+        log_status "No virtual environment exists. Executing \`uv venv\` to create one."
+        uv venv
+        VIRTUAL_ENV="$(pwd)/.venv"
+    fi
+
+    PATH_add "$VIRTUAL_ENV/bin"
+    export UV_ACTIVE=1  # or VENV_ACTIVE=1
+    export VIRTUAL_ENV
+}
+            
+# Define `use micromamba` direnv command that installs micromamba if needed,
+# bootstrap and activates an environment given micromamba environment definition
+# files.
+use_micromamba() {
+    # Hook micromamba into the shell
+    eval "$(micromamba shell hook --shell posix)"
+
+    # Activate micromamba environment
+    micromamba activate $1 || return 1
+}

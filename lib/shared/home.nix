@@ -445,6 +445,7 @@ in {
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
+    stdlib = builtins.readFile ../../files/direnvrc;
   };
 
   programs.zoxide = {
