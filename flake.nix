@@ -21,6 +21,10 @@
     };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {self, ...}: let
@@ -38,8 +42,34 @@
       };
 
       systems = ["aarch64-darwin" "x86_64-linux" "aarch64-linux"];
-      perSystem = {pkgs, ...}: {
-        formatter = pkgs.alejandra;
+      perSystem = {
+        pkgs,
+        system,
+        ...
+      }: let
+        pre-commit-config = {
+          src = ./.;
+          hooks = {
+            alejandra.enable = true;
+            flake-checker.enable = true;
+          };
+        };
+      in {
+        formatter = let
+          config = (inputs.git-hooks-nix.lib.${system}.run pre-commit-config).config;
+          inherit (config) package configFile;
+          script = ''
+            ${pkgs.lib.getExe package} run --all-files --config ${configFile}
+          '';
+        in
+          pkgs.writeShellScriptBin "pre-commit-run" script;
+
+        # # Run the hooks in a sandbox with `nix flake check`.
+        # # Read-only filesystem and no internet access.
+        # checks = {
+        #   pre-commit-check = inputs.git-hooks-nix.lib.${system}.run pre-commit-config;
+        # };
+
         devShells.default = pkgs.mkShell {
           buildInputs = [pkgs.just pkgs.jq];
         };
