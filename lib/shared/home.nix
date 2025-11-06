@@ -5,6 +5,10 @@
   ...
 }: let
   inherit (pkgs) system lib;
+  pkgs-stable = import inputs.nixpkgs-stable {
+    inherit system;
+    config.allowUnfree = true;
+  };
   freeze = inputs.freeze-flake.packages.${system}.default;
   zig = inputs.zig.packages.${system}."0.15.1";
   base =
@@ -186,6 +190,7 @@ in {
 
   programs.gitui = {
     enable = true;
+    package = pkgs-stable.gitui;
     keyConfig = ''
       (
           open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
@@ -436,9 +441,6 @@ in {
 
   programs.bat = {
     enable = true;
-    extraPackages = with pkgs.bat-extras; [
-      batgrep
-    ];
   };
 
   programs.direnv = {

@@ -1,11 +1,21 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
+{
+  inputs,
+  pkgs,
+  ...
+}: let
+  inherit (pkgs) system;
+  pkgs-stable = import inputs.nixpkgs-stable {
+    inherit system;
+    config.allowUnfree = true;
+  };
+in {
+  home.packages = [
     # Python
-    micromamba
-    cookiecutter
-    ruff
-    pyright
-    rye
-    pre-commit
+    pkgs-stable.micromamba
+    pkgs.cookiecutter
+    pkgs.ruff
+    pkgs.pyright
+    pkgs.rye
+    pkgs.pre-commit
   ];
 }
