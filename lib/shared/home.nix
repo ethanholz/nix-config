@@ -173,7 +173,6 @@ in {
       keybind = [
         "shift+enter=text:\n"
       ];
-      macos-icon = "retro";
     };
     enableFishIntegration = true;
     enableZshIntegration = true;
@@ -255,8 +254,6 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Ethan Holz";
-    userEmail = "ethan.holz@thoriumworks.com";
     signing = {
       key = "B4E94FDF35334301";
       signByDefault = true;
@@ -271,6 +268,19 @@ in {
       ".oprc"
       "repomix-output.txt"
     ];
+    settings = {
+      aliases = {
+        co = "checkout";
+        a = "add";
+      };
+      user = {
+        name = "Ethan Holz";
+        email = "ethan.holz@thoriumworks.com";
+      };
+      init.defaultBranch = "main";
+      rebase.autoStash = true;
+      push.autoSetupRemote = true;
+    };
     includes = [
       {
         condition = "gitdir:${base}/Documents/code/work/**/*";
@@ -285,21 +295,6 @@ in {
         path = "${base}/Documents/code/work/.gitconfig-work";
       }
     ];
-    aliases = {
-      co = "checkout";
-      a = "add";
-    };
-    extraConfig = {
-      # url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
-      # url."git@github.com:".insteadOf = "https://github.com/";
-      # difftool.prompt = true;
-      # difftool.nvimdiff.cmd = "nvim -d $LOCAL $REMOTE";
-      # diff.tool = "nvimdiff";
-      init.defaultBranch = "main";
-      rebase.autoStash = true;
-      push.autoSetupRemote = true;
-      # core.editor = "nvim";
-    };
   };
 
   programs.starship = {
