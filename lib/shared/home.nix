@@ -38,6 +38,7 @@ in {
     ++ lib.optionals pkgs.stdenv.isDarwin [
       "/opt/homebrew/opt/node@22/bin"
       "/opt/homebrew/bin"
+      "/opt/podman/bin"
       "$HOME/.opencode/bin"
     ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
