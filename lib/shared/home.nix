@@ -270,7 +270,7 @@ in {
       "repomix-output.txt"
     ];
     settings = {
-      aliases = {
+      alias = {
         co = "checkout";
         a = "add";
       };
