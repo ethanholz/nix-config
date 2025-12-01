@@ -8,7 +8,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    freeze-flake.url = "github:charmbracelet/freeze/d5cbd4c41fb1bb06ca562723c4f86a08350ccb72";
+    freeze-flake.url = "github:charmbracelet/freeze/5d93d8bd0a6440ef17b5dce32b9d57f77c3627c9";
     zig.url = "github:mitchellh/zig-overlay";
     zls-flake = {
       url = "github:zigtools/zls";
