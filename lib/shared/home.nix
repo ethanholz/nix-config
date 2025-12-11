@@ -127,6 +127,7 @@ in {
     pkgs.lychee
     pkgs.vscode-langservers-extracted
     pkgs.prettierd
+    pkgs.podman-compose
   ];
   fonts.fontconfig.enable = true;
 
