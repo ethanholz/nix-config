@@ -11,8 +11,8 @@ in {
       };
       modules = [
         (import ./shared/home.nix {inherit inputs pkgs-stable;})
-        ./shared/lsp.nix 
-        ./shared/ocaml.nix 
+        ./shared/lsp.nix
+        ./shared/ocaml.nix
         (import ./shared/python.nix {inherit pkgs-stable;})
         ./shared/nix.nix
       ];
@@ -28,6 +28,15 @@ in {
           nix.enable = false;
 
           nixpkgs.config.allowUnfree = true;
+          environment.etc."determinate/config.json".text = ''
+            {
+                "authentication": {
+                    "additionalNetrcSources": [
+                        "/Users/ethan/.config/nix/netrc"
+                    ]
+                }
+            }
+          '';
 
           # Create /etc/zshrc that loads the nix-darwin environment.
           programs.zsh.enable = true; # default shell on catalina
