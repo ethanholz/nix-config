@@ -8,7 +8,6 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    freeze-flake.url = "github:charmbracelet/freeze/d5cbd4c41fb1bb06ca562723c4f86a08350ccb72";
     zig.url = "github:mitchellh/zig-overlay";
     zls-flake = {
       url = "github:zigtools/zls";
@@ -76,4 +75,8 @@
         };
       };
     };
+  nixConfig = {
+    extra-substituters = ["https://attic-testing.fly.dev/system"];
+    extra-trusted-public-keys = ["system:jO6HbDP3xnQbHy/llnSubs8NPK7cVWwG827k6inRZkY="];
+  };
 }

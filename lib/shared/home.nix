@@ -9,7 +9,6 @@
     inherit system;
     config.allowUnfree = true;
   };
-  freeze = inputs.freeze-flake.packages.${system}.default;
   zig = inputs.zig.packages.${system}."0.15.1";
   base =
     if pkgs.stdenv.isDarwin
@@ -55,7 +54,6 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    freeze
     zig
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -70,6 +68,7 @@ in {
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    pkgs.charm-freeze
     pkgs.pfetch
     pkgs.fd
     pkgs.govulncheck
