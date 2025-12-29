@@ -13,7 +13,7 @@
       url = "github:zigtools/zls";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.5.0.tar.gz";
+    superhtml.url = "https://flakehub.com/f/ethanholz/superhtml-flake/0.6.2.tar.gz";
     ziggy.url = "github:kristoff-it/ziggy";
     carbonfox = {
       url = "https://raw.githubusercontent.com/EdenEast/nightfox.nvim/refs/heads/main/extra/carbonfox/carbonfox.ghostty";

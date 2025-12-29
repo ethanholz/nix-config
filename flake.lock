@@ -600,16 +600,16 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1726674798,
-        "narHash": "sha256-irPVcnArDGX/tKm30PzKMbkja5xJpL6r09VEmORnwWA=",
-        "rev": "f7d66925a1620c47d5d1d89da0781e9f1955339f",
-        "revCount": 4,
+        "lastModified": 1767046318,
+        "narHash": "sha256-pqIi9Vt4/mzr+hb9IVvfNO2ow7ZJurf83c68ZsSrEmU=",
+        "rev": "9df7521b4080b063f20f70b1dfcb6b9d15dbec0c",
+        "revCount": 8,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/ethanholz/superhtml-flake/0.5.0/019205d7-b2d9-7144-aa39-2889b750ed21/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/ethanholz/superhtml-flake/0.6.2/019b6c2c-3147-738f-992c-bd325d2d3c42/source.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://flakehub.com/f/ethanholz/superhtml-flake/0.5.0.tar.gz"
+        "url": "https://flakehub.com/f/ethanholz/superhtml-flake/0.6.2.tar.gz"
       }
     },
     "systems": {
