@@ -12,7 +12,6 @@ in {
       modules = [
         (import ./shared/home.nix {inherit inputs pkgs-stable;})
         ./shared/lsp.nix
-        ./shared/ocaml.nix
         (import ./shared/python.nix {inherit pkgs-stable;})
         ./shared/nix.nix
       ];
@@ -61,7 +60,6 @@ in {
               (import ./shared/home.nix {inherit inputs pkgs userName;})
               (import ./shared/lsp.nix {inherit inputs pkgs;})
               (import ./shared/python.nix {inherit inputs pkgs pkgs-stable;})
-              (import ./shared/ocaml.nix {inherit inputs pkgs;})
               (import ./shared/nix.nix {inherit inputs pkgs;})
             ];
           };

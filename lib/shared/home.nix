@@ -69,7 +69,6 @@ in {
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.charm-freeze
-    pkgs.pfetch
     pkgs.fd
     pkgs.govulncheck
     pkgs.revive
@@ -85,11 +84,8 @@ in {
     pkgs.git-cliff
     pkgs.nodePackages.typescript
     pkgs.yq-go
-    pkgs.elixir
-    pkgs.goreleaser
     pkgs.yubikey-manager
     pkgs.tailwindcss
-    pkgs.act
     pkgs.neovim
     pkgs.htop
     pkgs.btop
@@ -100,8 +96,6 @@ in {
     pkgs.dive
     pkgs.opentofu
     pkgs.croc
-    pkgs.pipx
-    pkgs.glow
     pkgs.iperf3
     pkgs.commit-mono
     pkgs.geist-font
@@ -109,20 +103,12 @@ in {
     pkgs.libwebp
     pkgs.yt-dlp
     pkgs.vhs
-    pkgs.cmake
     pkgs.minisign
     pkgs.typst
-    pkgs.turso-cli
-    pkgs.scorecard
-    pkgs.websocat
-    pkgs.duckdb
     pkgs.hugo
     pkgs.attic-client
-    pkgs.sqlc
     pkgs.tflint
-    pkgs.syft
     pkgs.repomix
-    pkgs.azure-storage-azcopy
     pkgs.lychee
     pkgs.vscode-langservers-extracted
     pkgs.prettierd
