@@ -28,5 +28,6 @@ jobs:
           token: ${{ secrets.ATTIC_TOKEN }}
 
       - name: Build
-        run: nix develop -c bash -c "set -euo pipefail; just build"
+        shell: nix develop --command -e {0}
+        run: just build
 
