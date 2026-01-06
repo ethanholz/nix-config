@@ -23,8 +23,8 @@ build:
     {{ build }}
 
 build-system profile:
-    nix build --json --no-link --print-build-logs --accept-flake-config "{{ profile }}" \
-    | jq -r ".[0].outputs.out"
+    set -e
+    nix build --no-link --print-build-logs --accept-flake-config "{{ profile }}"
 
 build-home-manager name="ethan":
     just build-system ".#homeConfigurations.{{ name }}.activationPackage"
