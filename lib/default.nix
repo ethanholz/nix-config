@@ -1,22 +1,20 @@
 {inputs}: let
   defaultUsername = "ethan";
-  pkgs = inputs.nixpkgs;
-  pkgs-stable = inputs.nixpkgs-stable;
 in {
   mkStandalone = {userName ? defaultUsername}: {system}:
     inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = import pkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      pkgs = inputs.nixpkgs;
       modules = [
-        (import ./shared/home.nix {inherit inputs pkgs-stable;})
-        ./shared/lsp.nix
-        (import ./shared/python.nix {inherit pkgs-stable;})
+        # (import ./shared/home.nix {inherit inputs pkgs-stable;})
+        # ./shared/lsp.nix
+        # (import ./shared/python.nix {inherit pkgs-stable;})
         ./shared/nix.nix
       ];
       # modules = [./home.nix ./lsp.nix ./ocaml.nix ./python.nix];
-      extraSpecialArgs = {inherit inputs userName pkgs-stable;};
+      extraSpecialArgs = {
+        inherit inputs;
+        pkgs = inputs.nixpkgs;
+      };
     };
   mkDarwin = {userName ? defaultUsername}: {system}:
     inputs.nix-darwin.lib.darwinSystem {
@@ -59,7 +57,7 @@ in {
               # inputs.ghostty.homeModules.default
               (import ./shared/home.nix {inherit inputs pkgs userName;})
               (import ./shared/lsp.nix {inherit inputs pkgs;})
-              (import ./shared/python.nix {inherit inputs pkgs pkgs-stable;})
+              (import ./shared/python.nix {inherit inputs pkgs;})
               (import ./shared/nix.nix {inherit inputs pkgs;})
             ];
           };

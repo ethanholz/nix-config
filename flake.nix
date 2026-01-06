@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -28,20 +27,18 @@
   };
 
   outputs = inputs @ {self, ...}: let
-    mkDarwin = self.lib.mkDarwin {};
-    mkStandalone = self.lib.mkStandalone {};
+    mkDarwin = self.my_lib.mkDarwin {};
+    mkStandalone = self.my_lib.mkStandalone {};
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
-        lib = import ./lib {inherit inputs;};
-        darwinConfigurations."Ethans-Laptop" = mkDarwin {system = "aarch64-darwin";};
-        homeConfigurations."ethan" = mkStandalone {system = "x86_64-linux";};
-        homeConfigurations."ethan-aarch64" = mkStandalone {system = "aarch64-linux";};
-        # This is for using in GH Actions
-        homeConfigurations."runner" = mkStandalone {system = "x86_64-linux";};
+        my_lib = import ./lib {inherit inputs;};
+        darwinConfigurations."Ethans-Laptop" = mkDarwin {
+          system = "aarch64-darwin";
+        };
       };
 
-      systems = ["aarch64-darwin" "x86_64-linux" "aarch64-linux"];
+      systems = ["aarch64-darwin"];
       perSystem = {
         pkgs,
         system,

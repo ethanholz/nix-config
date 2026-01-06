@@ -4,11 +4,11 @@
   userName,
   ...
 }: let
-  inherit (pkgs) system lib;
-  pkgs-stable = import inputs.nixpkgs-stable {
-    inherit system;
-    config.allowUnfree = true;
-  };
+  inherit (pkgs) system;
+  # pkgs-stable = import inputs.nixpkgs-stable {
+  #   inherit system;
+  #   config.allowUnfree = true;
+  # };
   zig = inputs.zig.packages.${system}."0.15.1";
   base =
     if pkgs.stdenv.isDarwin
@@ -24,22 +24,19 @@ in {
   home.homeDirectory = base;
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.sessionPath =
-    [
-      "$HOME/.local/bin"
-      "$HOME/go/bin"
-      "$HOME/.cargo/bin"
-      "$HOME/.cache/rebar3/bin"
-      "$HOME/.pixi/bin"
-      "$HOME/.bun/bin"
-      "$GHOSTTY_BIN_DIR"
-    ]
-    ++ lib.optionals pkgs.stdenv.isDarwin [
-      "/opt/homebrew/opt/node@22/bin"
-      "/opt/homebrew/bin"
-      "/opt/podman/bin"
-      "$HOME/.opencode/bin"
-    ];
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/go/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/.cache/rebar3/bin"
+    "$HOME/.pixi/bin"
+    "$HOME/.bun/bin"
+    "$GHOSTTY_BIN_DIR"
+    "/opt/homebrew/opt/node@22/bin"
+    "/opt/homebrew/bin"
+    "/opt/podman/bin"
+    "$HOME/.opencode/bin"
+  ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
   # This value determines the Home Manager release that your configuration is
@@ -144,7 +141,7 @@ in {
   programs.ghostty = {
     enable = true;
     # TODO: make this Linux capable in the future
-    package = lib.mkIf pkgs.stdenv.isDarwin null;
+    package = null;
     settings = {
       font-size = font-size;
       font-family = "GeistMono Nerd Font";
@@ -176,7 +173,7 @@ in {
 
   programs.gitui = {
     enable = true;
-    package = pkgs-stable.gitui;
+    # package = pkgs-stable.gitui;
     keyConfig = ''
       (
           open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
