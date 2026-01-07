@@ -254,7 +254,7 @@ in {
     ];
     settings = {
       alias = {
-        co = "checkout";
+        co = "switch";
         a = "add";
       };
       user = {
