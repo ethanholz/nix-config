@@ -50,6 +50,7 @@
             alejandra.enable = true;
             flake-checker.enable = true;
           };
+          package = pkgs.prek;
         };
       in {
         formatter = let
