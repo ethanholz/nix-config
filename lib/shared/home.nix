@@ -110,6 +110,7 @@ in {
     pkgs.vscode-langservers-extracted
     pkgs.prettierd
     pkgs.podman-compose
+    pkgs.syft
   ];
   fonts.fontconfig.enable = true;
 
