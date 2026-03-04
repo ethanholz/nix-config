@@ -73,8 +73,4 @@
         };
       };
     };
-  nixConfig = {
-    extra-substituters = ["https://attic-testing.fly.dev/system"];
-    extra-trusted-public-keys = ["system:jO6HbDP3xnQbHy/llnSubs8NPK7cVWwG827k6inRZkY="];
-  };
 }
