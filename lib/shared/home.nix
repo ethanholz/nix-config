@@ -266,6 +266,7 @@ in {
       init.defaultBranch = "main";
       rebase.autoStash = true;
       push.autoSetupRemote = true;
+      gpg.format = "ssh";
     };
     includes = [
       {
