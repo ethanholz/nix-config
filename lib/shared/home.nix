@@ -103,7 +103,6 @@ in {
     pkgs.minisign
     pkgs.typst
     pkgs.hugo
-    pkgs.attic-client
     pkgs.tflint
     pkgs.repomix
     pkgs.lychee
