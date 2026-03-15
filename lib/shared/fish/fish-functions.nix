@@ -87,4 +87,8 @@
   aws-login = ''
     aws sso login --sso-session $argv[1]
   '';
+  pixi-direnv = ''
+    printf 'watch_file pixi.lock\neval $(pixi shell-hook --frozen)' >> .envrc
+    direnv allow
+  '';
 }
