@@ -36,6 +36,7 @@ in {
     "/opt/homebrew/bin"
     "/opt/podman/bin"
     "$HOME/.opencode/bin"
+    "$HOME/.varlock/bin"
   ];
   # environment.pathsToLink = ["/usr/share/zsh/vendor-completions"];
 
@@ -477,4 +478,6 @@ in {
       };
     };
   };
+
+  programs.nushell.enable = true;
 }
