@@ -59,6 +59,7 @@ in {
               (import ./shared/lsp.nix {inherit inputs pkgs;})
               (import ./shared/python.nix {inherit inputs pkgs;})
               (import ./shared/nix.nix {inherit inputs pkgs;})
+              (import ./macos/home.nix {inherit inputs pkgs;})
             ];
           };
         }

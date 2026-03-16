@@ -32,9 +32,6 @@ in {
     "$HOME/.pixi/bin"
     "$HOME/.bun/bin"
     "$GHOSTTY_BIN_DIR"
-    "/opt/homebrew/opt/node@22/bin"
-    "/opt/homebrew/bin"
-    "/opt/podman/bin"
     "$HOME/.opencode/bin"
     "$HOME/.varlock/bin"
   ];
