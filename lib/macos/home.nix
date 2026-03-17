@@ -35,4 +35,5 @@ in {
     enableFishIntegration = true;
     enableZshIntegration = true;
   };
+  fonts.fontconfig.enable = true;
 }
