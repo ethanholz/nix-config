@@ -28,7 +28,6 @@
 
   outputs = inputs @ {self, ...}: let
     mkDarwin = self.my_lib.mkDarwin {};
-    mkStandalone = self.my_lib.mkStandalone {};
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
@@ -36,9 +35,31 @@
         darwinConfigurations."Ethans-Laptop" = mkDarwin {
           system = "aarch64-darwin";
         };
+        homeConfigurations."ethan" = let
+          userName = "ethan";
+        in
+          inputs.home-manager.lib.homeManagerConfiguration {
+            pkgs = import inputs.nixpkgs {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+            extraSpecialArgs = {
+              inherit inputs userName;
+            };
+            modules = [
+              ({pkgs, ...}: {
+                imports = [
+                  (import ./lib/shared/home.nix {inherit inputs pkgs userName;})
+                  (import ./lib/shared/lsp.nix {inherit inputs pkgs;})
+                  (import ./lib/shared/python.nix {inherit inputs pkgs;})
+                  (import ./lib/shared/nix.nix {inherit inputs pkgs;})
+                ];
+              })
+            ];
+          };
       };
 
-      systems = ["aarch64-darwin"];
+      systems = ["aarch64-darwin" "x86_64-linux"];
       perSystem = {
         pkgs,
         system,
