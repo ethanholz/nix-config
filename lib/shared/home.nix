@@ -77,7 +77,7 @@ in {
     pkgs.bfg-repo-cleaner
     pkgs.just
     pkgs.git-cliff
-    pkgs.nodePackages.typescript
+    pkgs.typescript
     pkgs.yq-go
     pkgs.yubikey-manager
     pkgs.tailwindcss
