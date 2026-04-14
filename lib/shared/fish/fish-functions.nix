@@ -91,4 +91,35 @@
     printf 'watch_file pixi.lock\neval $(pixi shell-hook --frozen)' >> .envrc
     direnv allow
   '';
+  pass-env = ''
+    set envfile $argv[1]
+    set -e argv[1]
+
+    set env_args
+
+    while read -l line
+        if test -z "$line"
+            continue
+        end
+        if string match -qr '^\s*#' -- $line
+            continue
+        end
+
+        set parts (string split -m 1 '=' -- $line)
+        if test (count $parts) -ne 2
+            echo "Invalid line in $envfile: $line" >&2
+            return 1
+        end
+
+        set key (string trim -- $parts[1])
+        set path (string trim -- $parts[2])
+
+        # IMPORTANT: only take first line
+        set value (pass show $path | head -n1)
+
+        set env_args $env_args "$key=$value"
+    end < $envfile
+
+    env $env_args $argv
+  '';
 }

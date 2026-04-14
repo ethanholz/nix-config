@@ -108,6 +108,7 @@ in {
     pkgs.prettierd
     pkgs.podman-compose
     pkgs.syft
+    pkgs.pass
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
