@@ -338,10 +338,8 @@ in {
         end
 
        set -x GPG_TTY (tty)
-       if not set -q SSH_AUTH_SOCK
-           set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-           gpgconf --launch gpg-agent
-        end
+       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+       gpgconf --launch gpg-agent
        eval "$(micromamba shell hook --shell fish)"
       set fish_cursor_default block
       if test -e /Users/ethan/.deno/env.fish
