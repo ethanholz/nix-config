@@ -122,4 +122,7 @@
 
     env $env_args $argv
   '';
+  s3cat = ''
+    aws s3 cp $argv[1] - | cat
+  '';
 }
