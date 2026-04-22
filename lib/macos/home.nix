@@ -28,6 +28,7 @@ in {
       command = "${pkgs.fish}/bin/fish";
       auto-update-channel = "tip";
       auto-update = "download";
+      unfocused-split-opacity = "1";
       keybind = [
         "shift+enter=text:\n"
       ];
