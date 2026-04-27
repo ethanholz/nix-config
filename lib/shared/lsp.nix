@@ -25,5 +25,6 @@ in {
     pkgs.just-lsp
     pkgs.yaml-language-server
     pkgs.harper
+    pkgs.luajitPackages.tree-sitter-cli
   ];
 }

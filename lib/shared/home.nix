@@ -135,6 +135,7 @@ in {
   home.sessionVariables = {
     editor = "nvim";
     MAMBA_ROOT_PREFIX = "~/micromamba/";
+    DO_NOT_TRACK = "1";
   };
 
   # Let Home Manager install and manage itself.
@@ -453,5 +454,10 @@ in {
     };
   };
 
-  programs.nushell.enable = true;
+  programs.nushell = {
+    enable = true;
+    plugins = [
+      pkgs.nushellPlugins.polars
+    ];
+  };
 }
