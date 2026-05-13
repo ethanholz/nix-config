@@ -63,6 +63,7 @@ in {
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    pkgs.grype
     pkgs.charm-freeze
     pkgs.fd
     pkgs.govulncheck
