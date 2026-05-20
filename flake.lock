@@ -650,11 +650,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1764073440,
-        "narHash": "sha256-0CD49vWVALbGaEkUDLGDHPUaEXadSZIc4J80UvwmyfY=",
+        "lastModified": 1777997289,
+        "narHash": "sha256-hCzbPyBX62YLvMzat3jKlhXPPsY4pv2/Hs2iLKi5Cwo=",
         "owner": "kristoff-it",
         "repo": "ziggy",
-        "rev": "852053b09a5f8f5b79ca880f86ea77fc7da3dd6c",
+        "rev": "0b61581980d6905dd4108a618d602f5778593122",
         "type": "github"
       },
       "original": {
