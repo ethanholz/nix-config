@@ -144,6 +144,8 @@ in {
 
   programs.go.enable = true;
 
+  programs.zellij.enable = true;
+
   programs.lazygit = {
     enable = true;
   };
