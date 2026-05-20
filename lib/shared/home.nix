@@ -19,6 +19,7 @@
     then "15"
     else "14";
   carbonfox = inputs.carbonfox;
+  jj-starship = inputs.jj-starship.packages.${system}.default;
 in {
   home.username = userName;
   home.homeDirectory = base;
@@ -50,6 +51,7 @@ in {
   # environment.
   home.packages = [
     zig
+    jj-starship
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -270,6 +272,8 @@ in {
       character = {
         success_symbol = "[❯](purple)";
       };
+      git_branch.disabled = true;
+      git_status.disabled = true;
       directory = {
         format = "[$path]($style)[$read_only]($read_only_style) ";
       };
@@ -296,26 +300,9 @@ in {
       };
       custom = {
         jj = {
-          command = ''
-                        jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always  --template '
-              separate(" ",
-                bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-                tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
-                surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
-                if(conflict, "conflict"),
-                if(divergent, "divergent"),
-                if(hidden, "hidden"),
-              )
-            '
-          '';
-          when = "jj --ignore-working-copy root";
-          symbol = "jj ";
-        };
-        jjstate = {
-          when = "jj --ignore-working-copy root";
-          command = ''
-            jj log -r@ -n1 --ignore-working-copy --no-graph -T "" --stat | tail -n1 | sd "(\d+) files? changed, (\d+) insertions?\(\+\), (\d+) deletions?\(-\)" ' \$\{1\}m \$\{2\}+ \$\{3\}-' | sd " 0." ""
-          '';
+          when = "jj-starship detect";
+          shell = ["jj-starship"];
+          format = "$output";
         };
       };
     };

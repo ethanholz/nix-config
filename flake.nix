@@ -24,6 +24,7 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    jj-starship.url = "github:dmmulroy/jj-starship";
   };
 
   outputs = inputs @ {self, ...}: let
