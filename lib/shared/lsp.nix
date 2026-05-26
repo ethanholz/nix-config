@@ -4,8 +4,6 @@
   ...
 }: let
   system = pkgs.system;
-  superhtml = inputs.superhtml.packages.${system}.default;
-  # ziggy = inputs.ziggy.packages.${system}.default;
 in {
   home.packages = [
     pkgs.lua-language-server
@@ -17,7 +15,6 @@ in {
     pkgs.stylua
     pkgs.terraform-ls
     pkgs.zls
-    superhtml
     # ziggy
     pkgs.astro-language-server
     pkgs.svelte-language-server
