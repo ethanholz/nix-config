@@ -10,6 +10,7 @@
   #   config.allowUnfree = true;
   # };
   zig = inputs.zig.packages.${system}."0.15.1";
+  zmx = inputs.zmx.packages.${system}.default;
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
@@ -52,6 +53,7 @@ in {
   home.packages = [
     zig
     jj-starship
+    zmx
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -66,52 +68,34 @@ in {
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.grype
-    pkgs.charm-freeze
     pkgs.fd
-    pkgs.govulncheck
-    pkgs.revive
     pkgs.fzf
     pkgs.ripgrep
-    pkgs.age
-    pkgs.sops
     pkgs.golangci-lint
-    pkgs.gitleaks
-    # Git
-    pkgs.bfg-repo-cleaner
     pkgs.just
-    pkgs.git-cliff
     pkgs.typescript
     pkgs.yq-go
     pkgs.yubikey-manager
-    pkgs.tailwindcss
     pkgs.neovim
     pkgs.htop
     pkgs.btop
     pkgs.stow
     pkgs.ffmpeg
-    pkgs.actionlint
-    pkgs.jupyter
-    pkgs.dive
     pkgs.opentofu
     pkgs.croc
     pkgs.iperf3
     pkgs.commit-mono
     pkgs.geist-font
-    pkgs.flyctl
-    pkgs.libwebp
-    pkgs.yt-dlp
     pkgs.vhs
     pkgs.minisign
     pkgs.typst
-    pkgs.hugo
     pkgs.tflint
-    pkgs.repomix
     pkgs.lychee
-    pkgs.vscode-langservers-extracted
     pkgs.prettierd
     pkgs.podman-compose
     pkgs.syft
-    pkgs.pass
+    pkgs.duckdb
+    pkgs.scorecard
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -226,13 +210,8 @@ in {
     };
     lfs.enable = true;
     ignores = [
-      "salt-server.log"
-      ".ccls*"
-      "commit_convention.yml"
       ".direnv/"
       ".envrc"
-      ".oprc"
-      "repomix-output.txt"
     ];
     settings = {
       alias = {
@@ -383,10 +362,6 @@ in {
     '';
   };
 
-  programs.bat = {
-    enable = true;
-  };
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -414,13 +389,6 @@ in {
       };
     };
     extensions = [pkgs.gh-dash];
-  };
-
-  programs.helix = {
-    enable = true;
-    settings = {
-      theme = "carbonfox";
-    };
   };
 
   programs.jujutsu = {

@@ -25,15 +25,6 @@ in {
           nix.enable = false;
 
           nixpkgs.config.allowUnfree = true;
-          environment.etc."determinate/config.json".text = ''
-            {
-                "authentication": {
-                    "additionalNetrcSources": [
-                        "/Users/ethan/.config/nix/netrc"
-                    ]
-                }
-            }
-          '';
 
           # Create /etc/zshrc that loads the nix-darwin environment.
           programs.zsh.enable = true; # default shell on catalina
