@@ -24,6 +24,10 @@
     };
     jj-starship.url = "github:dmmulroy/jj-starship";
     zmx.url = "git+https://tangled.org/ethanholz.com/zmx-binary-flake?ref=main";
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {self, ...}: let

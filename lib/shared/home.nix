@@ -4,13 +4,10 @@
   userName,
   ...
 }: let
-  inherit (pkgs) system;
-  # pkgs-stable = import inputs.nixpkgs-stable {
-  #   inherit system;
-  #   config.allowUnfree = true;
-  # };
+  system = pkgs.stdenv.hostPlatform.system;
   zig = inputs.zig.packages.${system}."0.15.1";
   zmx = inputs.zmx.packages.${system}.default;
+  herdr = inputs.herdr.packages.${system}.default;
   base =
     if pkgs.stdenv.isDarwin
     then "/Users/${userName}"
@@ -54,6 +51,7 @@ in {
     zig
     jj-starship
     zmx
+    herdr
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -96,6 +94,7 @@ in {
     pkgs.syft
     pkgs.duckdb
     pkgs.scorecard
+    pkgs.jjui
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

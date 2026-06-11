@@ -243,6 +243,26 @@
         "type": "github"
       }
     },
+    "herdr": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781701723,
+        "narHash": "sha256-q9TMy1O34RuUz+vEDa4AZznA9wfKE5G+NsXH+Q0LumM=",
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "rev": "54490254f70469cd154ee630bc4bec84da178f0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -468,6 +488,7 @@
         "determinate": "determinate",
         "flake-parts": "flake-parts_2",
         "git-hooks-nix": "git-hooks-nix_2",
+        "herdr": "herdr",
         "home-manager": "home-manager",
         "jj-starship": "jj-starship",
         "nix-darwin": "nix-darwin",
