@@ -125,4 +125,10 @@
   s3cat = ''
     aws s3 cp $argv[1] - | cat
   '';
+  hs = ''
+    set session (herdr session list --json | jq -r '.sessions[].name' | fzf --height 20% --layout=reverse --border)
+    if test -n "$session"
+        herdr --session "$session"
+    end
+  '';
 }
