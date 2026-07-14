@@ -19,6 +19,9 @@
   carbonfox = inputs.carbonfox;
   jj-starship = inputs.jj-starship.packages.${system}.default;
 in {
+  imports = [
+    inputs.hunk.homeManagerModules.default
+  ];
   home.username = userName;
   home.homeDirectory = base;
   # Home Manager needs a bit of information about you and the paths it should
@@ -416,5 +419,9 @@ in {
     plugins = [
       pkgs.nushellPlugins.polars
     ];
+  };
+
+  programs.hunk = {
+    enable = true;
   };
 }

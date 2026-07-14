@@ -6,7 +6,7 @@
     else "14";
 in {
   home.sessionPath = [
-    "/opt/homebrew/opt/node@22/bin"
+    "/opt/homebrew/opt/node@24/bin"
     "/opt/homebrew/bin"
     "/opt/podman/bin"
     "/Applications/Obsidian.app/Contents/MacOS"
