@@ -401,7 +401,8 @@ in {
         email = "ethan.holz@thoriumworks.com";
       };
       ui = {
-        paginate = "never";
+        pager = ["hunk" "pager"];
+        diff-formatter = ":git";
       };
       signing = {
         behavior = "own";
@@ -423,5 +424,11 @@ in {
 
   programs.hunk = {
     enable = true;
+    enableGitIntegration = true;
+    settings = {
+      line_numbers = true;
+      mode = "auto";
+      theme = "vesper";
+    };
   };
 }
