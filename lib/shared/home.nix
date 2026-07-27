@@ -401,6 +401,7 @@ in {
         email = "ethan.holz@thoriumworks.com";
       };
       ui = {
+        paginate = "never";
         pager = ["hunk" "pager"];
         diff-formatter = ":git";
       };
