@@ -22,5 +22,6 @@ in {
     pkgs.luajitPackages.tree-sitter-cli
     pkgs.actionlint
     pkgs.vscode-langservers-extracted
+    pkgs.tombi
   ];
 }

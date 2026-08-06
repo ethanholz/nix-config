@@ -98,6 +98,8 @@ in {
     pkgs.duckdb
     pkgs.scorecard
     pkgs.jjui
+    pkgs.pinact
+    pkgs.pnpm
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -430,6 +432,7 @@ in {
       line_numbers = true;
       mode = "auto";
       theme = "vesper";
+      agent_notes = "true";
     };
   };
 }
