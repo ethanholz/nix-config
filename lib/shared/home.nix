@@ -100,6 +100,7 @@ in {
     pkgs.jjui
     pkgs.pinact
     pkgs.pnpm
+    pkgs.websocat
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
