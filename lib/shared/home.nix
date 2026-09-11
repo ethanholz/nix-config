@@ -433,7 +433,7 @@ in {
       line_numbers = true;
       mode = "auto";
       theme = "vesper";
-      agent_notes = "true";
+      agent_notes = true;
     };
   };
 }
