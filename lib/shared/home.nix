@@ -414,6 +414,9 @@ in {
       git = {
         write-change-id-header = true;
       };
+      remotes.origin = {
+        auto-track-bookmarks = "*";
+      };
     };
   };
 
