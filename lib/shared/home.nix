@@ -6,6 +6,7 @@
 }: let
   system = pkgs.stdenv.hostPlatform.system;
   zig = inputs.zig.packages.${system}."0.15.1";
+  ssh-key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD2ZttZ7thgWcRjoIu6wLWMq9Ep3kB6duxiArcXt6E5GoB69GxeX0jvXqd/ztPSge77i7XnqFkaB6tcMPe6y+lAOXBxFQQoNkdJF3mcrQHoH3TTOvqP8FS6yKLKbAAB+goKXRBmDJWyAtmnXlQJeisnTY5sIPzV0AbA3H8GlVGwsfeVJyD/EVpVb/Q8rOHh2IsRHFxI21IBDoe4D0HQIEOEau+pDtFSQ32GSiNNAKt3lxdpVneZO+fIOs1iJkHgwetTCnxf/qyWwrsZgDC5L/9OQCHphDfsCZs/klnUTbb5T2PknqBSxNe0fpKYl5Z57rkF8ya3g3Dss7gwIGlBAKtOysFWo/DLoFE3e+U1AIsqIIbmF6AkcaIBO2svtOdOYUYPgrBOdcEXWD3Pmm53woGcLfouC+xM/u6Utf11meML4ITFXZuceGCIHMsTjLDXOjX9wUhcEqSK7//wZuz0p1OhCOcAZqWFQm36HRNZ+T8VAqDqNXuCbkM5QJYbla3bnmA8WMNVwF1Tq3N9VZRSob4FhnJda2bqcalH0R4ToU4XHXpZm9/jWeuxhYbzm1sM3kQrMGg7jphC0KdprY/Wbt0whoMOtm/hFEX1z8l6OAx9vEW2ObRHC6KyzoqCntSrOODrzo1oQArFnRyv8EBedlHTcUysbi0vzW6dXFdzSM7xVw== openpgp:0x69A0DAC9";
   herdr = inputs.herdr.packages.${system}.default;
   base =
     if pkgs.stdenv.isDarwin
@@ -111,6 +112,10 @@ in {
           "build_on_save_step": "check"
       }
     '';
+    ".ssh/allowed-signers".text = ''
+      ethan.holz@thoriumworks.com ${ssh-key}\n
+      ethan.holz@omsf.io ${ssh-key}\n
+    '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -207,7 +212,7 @@ in {
   programs.git = {
     enable = true;
     signing = {
-      key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD2ZttZ7thgWcRjoIu6wLWMq9Ep3kB6duxiArcXt6E5GoB69GxeX0jvXqd/ztPSge77i7XnqFkaB6tcMPe6y+lAOXBxFQQoNkdJF3mcrQHoH3TTOvqP8FS6yKLKbAAB+goKXRBmDJWyAtmnXlQJeisnTY5sIPzV0AbA3H8GlVGwsfeVJyD/EVpVb/Q8rOHh2IsRHFxI21IBDoe4D0HQIEOEau+pDtFSQ32GSiNNAKt3lxdpVneZO+fIOs1iJkHgwetTCnxf/qyWwrsZgDC5L/9OQCHphDfsCZs/klnUTbb5T2PknqBSxNe0fpKYl5Z57rkF8ya3g3Dss7gwIGlBAKtOysFWo/DLoFE3e+U1AIsqIIbmF6AkcaIBO2svtOdOYUYPgrBOdcEXWD3Pmm53woGcLfouC+xM/u6Utf11meML4ITFXZuceGCIHMsTjLDXOjX9wUhcEqSK7//wZuz0p1OhCOcAZqWFQm36HRNZ+T8VAqDqNXuCbkM5QJYbla3bnmA8WMNVwF1Tq3N9VZRSob4FhnJda2bqcalH0R4ToU4XHXpZm9/jWeuxhYbzm1sM3kQrMGg7jphC0KdprY/Wbt0whoMOtm/hFEX1z8l6OAx9vEW2ObRHC6KyzoqCntSrOODrzo1oQArFnRyv8EBedlHTcUysbi0vzW6dXFdzSM7xVw== openpgp:0x69A0DAC9";
+      key = ssh-key;
       signByDefault = true;
       format = "ssh";
     };
@@ -228,7 +233,10 @@ in {
       init.defaultBranch = "main";
       rebase.autoStash = true;
       push.autoSetupRemote = true;
-      gpg.format = "ssh";
+      gpg = {
+        format = "ssh";
+        ssh.allowedSignersFile = "~/.ssh/allowed-signers";
+      };
     };
     includes = [
       {
@@ -409,7 +417,8 @@ in {
       signing = {
         behavior = "own";
         backend = "ssh";
-        key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD2ZttZ7thgWcRjoIu6wLWMq9Ep3kB6duxiArcXt6E5GoB69GxeX0jvXqd/ztPSge77i7XnqFkaB6tcMPe6y+lAOXBxFQQoNkdJF3mcrQHoH3TTOvqP8FS6yKLKbAAB+goKXRBmDJWyAtmnXlQJeisnTY5sIPzV0AbA3H8GlVGwsfeVJyD/EVpVb/Q8rOHh2IsRHFxI21IBDoe4D0HQIEOEau+pDtFSQ32GSiNNAKt3lxdpVneZO+fIOs1iJkHgwetTCnxf/qyWwrsZgDC5L/9OQCHphDfsCZs/klnUTbb5T2PknqBSxNe0fpKYl5Z57rkF8ya3g3Dss7gwIGlBAKtOysFWo/DLoFE3e+U1AIsqIIbmF6AkcaIBO2svtOdOYUYPgrBOdcEXWD3Pmm53woGcLfouC+xM/u6Utf11meML4ITFXZuceGCIHMsTjLDXOjX9wUhcEqSK7//wZuz0p1OhCOcAZqWFQm36HRNZ+T8VAqDqNXuCbkM5QJYbla3bnmA8WMNVwF1Tq3N9VZRSob4FhnJda2bqcalH0R4ToU4XHXpZm9/jWeuxhYbzm1sM3kQrMGg7jphC0KdprY/Wbt0whoMOtm/hFEX1z8l6OAx9vEW2ObRHC6KyzoqCntSrOODrzo1oQArFnRyv8EBedlHTcUysbi0vzW6dXFdzSM7xVw== openpgp:0x69A0DAC9";
+        key = ssh-key;
+        backends.ssh.allowed-signers = "~/.ssh/allowed-signers";
       };
       git = {
         write-change-id-header = true;
